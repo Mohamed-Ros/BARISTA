@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+    /* start events department */
+    body {
+    font-family: "Cairo", sans-serif;
+}
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+.event{
+    
+    margin: 0;
+    padding-top: 50px;
+    background-color: #05435C;
+    text-align: center;
+    direction: rtl;
+}
+.event .header.test {
+background-color: #f9f9f9; 
+padding: 20px; 
+border-radius: 10px; 
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+text-align: center; 
+margin-bottom: 20px; 
+}
+h1{
+color: #ffffff;
+}
+.event .header.test h1 {
+font-size: 2.5rem; 
+margin-top: 10px;
+font-weight: bold; 
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
+}
+@media (max-width: 768px) {
+
+.event .header.test h1 {
+font-size: 2rem; 
+}
+}
+.event .section-content {
+margin: 20px auto;
+max-width: 1200px;
+
+}
+.event .event-list {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 20px;
+animation: fadeInUp 2s ease-in-out;
+}
+.event .event-item {
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 10px;
+padding: 20px;
+width: 250px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
+}
+.event .event-item:hover {
+transform: scale(1.05);
+}
+.event .event-item h3 {
+color: #05435C;
+margin-bottom: 10px;
+}
+.event .event-item img {
+width: 100%;
+border-radius: 10px;
+margin-bottom: 15px;
+}
+.event .booking-options {
+margin-top: 30px;
+padding: 20px;
+background-color: #fafafa;
+border-radius: 10px;
+animation: fadeIn 2s ease-in-out;
+}
+.event .booking-options ul {
+list-style-type: none;
+padding: 0;
+}
+.event .booking-options li {
+margin: 10px 0;
+color: #121212;
+}
+.event .barista-services {
+margin-top: 30px;
+padding: 20px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+animation: fadeIn 2.5s ease-in-out;
+}
+@keyframes fadeInUp {
+from { opacity: 0; transform: translateY(50px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+.event .event-list {
+flex-direction: column;
+}
+}
+.event, .section-content, .header.test {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+/* Media Queries */
+/* Responsive desing */
+@media (max-width: 576px) {
+.event .header.test h1 {
+    font-size: 1.8rem; 
+}
+.event .event-item {
+    width: 90%; 
+    margin: 0 auto;
+}
+.event .event-list {
+    flex-direction: column; 
+}
+.section-content, .booking-options, .barista-services {
+    width: 95%; 
+}
+}
+@media (min-width: 577px) and (max-width: 992px) {
+.event .header.test h1 {
+    font-size: 2.2rem; 
+}
+.event .event-list {
+    flex-direction: row; 
+    justify-content: space-around;
+}
+.event .event-item {
+    width: 45%; 
+}
+.section-content, .booking-options, .barista-services {
+    width: 90%;
+}
+}
+@media (min-width: 993px) {
+.event .header.test h1 {
+    font-size: 2.5rem;
+}
+.event.event-item {
+    width: 250px; 
+}
+.section-content, .booking-options, .barista-services {
+    max-width: 1200px;
+    width: 100%;
+}
+}
+.social{
+color: #ffffff;
+margin-top: 20px;
+}
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+.social-icons a {
+    margin: 0 10px;
+    color: #ffffff;
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+    .social-icons a:hover {
+    transform: scale(1.2);
+}
+/* end events */
+    </style>
+</head>
+<body>
+    <!-- start is the event -->
+<section class="event" id="Events">
+    <div class="header.test"> 
+        <h1 class="social-icons"><a href="index.html" ><i class="fa-solid fa-house"></i> الصفحة الرئيسية </a></h1>
+        <h1>مناسباتك المميزة تبدأ هنا !</h1>
+        </div>
+        <div class="section-content">
+        <div class="event-list">
+        <div class="event-item">
+            <img src="img/event1.jpg" alt="عيد ميلاد">
+            <h3> أعياد ميلاد</h3>
+            <p>إحنا هنا علشان نحتفل بيوم ميلادك بطريقة مميزة, من الزينة الجميلة، لكل التفاصيل الصغيرة اللي هتخلي اليوم ده ذكرى لا تُنسى!</p>
+        </div>
+        <div class="event-item">
+            <img src="img/event2.jpg" alt="رأس السنة">
+            <h3> رأس السنة</h3>
+            <p>احتفل برأس السنة بأسلوب ساحر ومميز! إحنا هنعمل لك ليلة لا تُنسى مليانة زينة مبهرة، وأجواء احتفالية رائعة، وكل التفاصيل اللي تخلي بداية العام الجديد تكون مثالية</p>
+        </div>
+        <div class="event-item">
+            <img src="img/event3.jpg" alt="حفلة تخرج">
+            <h3> حفلات التخرج</h3>
+            <p>احنا هنا علشان نعمل لك يوم تخرجك ذكرى لا تُنسى, مع زينة مبهجة، وأجواء مليانة فرحة، واحتفالات تعبر عن إنجازك الكبير.</p>
+        </div>
+        <div class="event-item">
+            <img src="img/event4.jpg" alt="حفلة نجاح">
+            <h3> حفلات النجاح</h3>
+            <p>اجعل إنجازاتك الكبيرة لحظات لا تُنسى مع حفلات النجاح! إحنا هنا علشان نساعدك تحتفل بكل خطوة حققتها بأجواء مليانة فرحة وزينة مبهجة</p>
+        </div>
+        <div class="event-item">
+            <img src="img/event5.jpg" alt="حفلة نجاح">
+            <h3>عيد الحب</h3>
+            <p>احتفل بعيد الحب بطريقة مميزة ورومانسية! احنا هنا علشان نساعدك تخلي يوم الحب مليان لحظات ساحرة وزينة جميلة. سواء كنت عايز تعبر عن مشاعرك لأحبائك أو تقضي يوم مميز مع شريك حياتك</p>
+        </div>
+        </div>
+        <div class="booking-options">
+        <h2>خيارات الحجز</h2>
+        <ul>
+            <li>حجز كامل للمناسبات </li>
+            <li>حجز كامل للمكان </li>
+            <li>حجز طاولات </li>
+            <li>حجز أفراد </li>
+            <li>حجز ديكورات : زينة، بالونات، شموع، ورد، وكل شيء للديكور , مع موجود مصور</li>
+        </ul>
+        </div>
+        <div class="barista-services">
+        <h2>جزء من خدمات بارستا</h2>
+        <p>وكمان هنوفرلك كافة الخدمات - ( عصائر - مشروبات باردة و سخنة - حلو و كيك بكل الأنواع )</p>
+        </div>
+        <div class="barista-services">
+            <h2>للتواصل و الاستفسار علي الخدمات </h2>
+            <p> 01010429279 <i class="fa fa-phone"></i></p>
+        </div>
+        <div class="social">
+            <h3>تابعنا للمزيد</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100080974494325&mibextid=ZbWKwL" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/baristacafe12?igsh=MWNyMnFwZTBveTdjdw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+    </div>
+        </section>
+        <!-- end section < events -->
+</body>
+</html>

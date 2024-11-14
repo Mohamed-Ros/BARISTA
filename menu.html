@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أطلب الآن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+<body class="fade-in">
+
+<section class="order-now">
+    <a href="index.html" class="back-link"> الصفحة الرئيسية <i class="fa-solid fa-house"></i></a>
+    <h2>أطلب الآن</h2>
+    <div class="menu-section">
+        <div class="menu-category">
+            <a href="Drinks_menu.htm"><h3><menu></menu></h3></a>
+            <ul>
+                <a href="Drinks_menu.htm"><h3>Drinks menu - قائمة المشروبات</h3></a>
+                <li><a href="Drinks_menu.htm" class="page-transition">Hot Drinks - مشروبات ساخنة</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">Hot COFFEE - قهوة ساخنة</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">ICE COFFEE - قهوة مثلجة</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">ICE-CREAM - آيس كريم</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">ZABADO - زابادو</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">SMOOTHIE - سموثي</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">FRESH JUICE - عصير طازج</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">MILKSHAKE - ميلك شيك</a></li>
+                <li><a href="Drinks_menu.htm" class="page-transition">SOFT DRINKS - مشروبات غازية </a></li>
+                <a href="Drinks_menu.htm#food"><h3>Food menu - قائمة الطعام</h3></a>
+                <li><a href="Food_menu.html" class="page-transition">DESSERT - حلوي</a></li>
+                <li><a href="Food_menu.html" class="page-transition">WAFFLES - وافل</a></li>
+                <li><a href="Food_menu.html" class="page-transition">BAKERY - مخبوزات</a></li>
+                <li><a href="Food_menu.html" class="page-transition">MEALS - وجبات</a></li>
+                <li><a href="Food_menu.html" class="page-transition">PASTA - مكرونة</a></li>
+                <li><a href="Food_menu.html" class="page-transition">PIZZA - بيتزا</a></li>
+                <li><a href="Food_menu.html" class="page-transition">CREPE - كريب</a></li>
+                <li><a href="Food_menu.html" class="page-transition">SWEETY CREPE - كريب حلوة</a></li>
+                <li><a href="Food_menu.html" class="page-transition">SANDWICHES - سندويشات</a></li>
+                <li><a href="Food_menu.html" class="page-transition">SAROKH - صاروخ</a></li>
+                <li><a href="Food_menu.html" class="page-transition">SALAD - سلطة</a></li>
+                <li><a href="Food_menu.html" class="page-transition">ADDITIONS - إضافات</a></li>
+            </ul>
+        </div>
+    </div>
+    <a href="index.html" class="back-link page-transition">الرجوع إلي الخلف <i class="fa-solid fa-share"></i></a>
+</section>
+<style>
+
+    body {
+    font-family: "Cairo", sans-serif;
+    background-color: #F5F5F5;
+    display: flex; /* استخدام flexbox */
+    flex-direction: column; /* المحاذاة من أعلى إلى أسفل */
+    justify-content: center; /* لضمان تمركز المحتوى عمودياً */
+    
+}
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeInEffect 1s forwards;
+}
+
+@keyframes fadeInEffect {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade-out effect for navigation */
+.fade-out {
+    animation: fadeOutEffect 0.5s forwards;
+}
+
+@keyframes fadeOutEffect {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.order-now {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px; /* Padding لتوسيع المساحة بين المحتوى والحواف */
+    background: url('img/poto.png') center top/cover no-repeat;
+    min-height: 100vh; /* لتوسيع section لملء الشاشة */
+    display: flex; /* استخدام flexbox */
+    flex-direction: column; /* المحاذاة من أعلى إلى أسفل */
+    justify-content: center; /* لضمان تمركز المحتوى عمودياً */
+    align-items: center; /* لضمان تمركز المحتوى أفقياً */
+    position: relative;
+}
+
+.order-now::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8); 
+    z-index: 1;
+}
+
+.order-now h2 {
+    font-size: 2.2em;
+    color: #FFD700;
+    margin-bottom: 40px;
+    animation: fadeInDown 1s ease-in-out;
+    z-index: 2;
+    position: relative;
+}
+
+.menu-section {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    z-index: 2;
+    position: relative;
+    flex-wrap: wrap; 
+}
+
+.menu-category {
+    background-color: #05435c;
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease, background-color 0.9s ease;
+    width: 500px;
+    z-index: 2;
+    position: relative;
+}
+
+.menu-category:hover {
+    transform: scale(1.05);
+    background-color: rgba(5, 67, 92, 0.5);
+}
+
+.menu-category h3 {
+    font-size: 1.2em;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+.menu-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-category li {
+    margin: 15px 0;
+}
+
+.menu-category a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.9s ease;
+}
+
+.menu-category a:hover {
+    color: #eafcac;
+}
+
+.back-link {
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 1.2em;
+    display: inline-block;
+    margin-top: 30px;
+    animation: fadeInUp 1s ease-in-out;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.3s ease, background-color 0.9s ease;
+}
+
+.back-link:hover {
+    color: #e2f69f;
+    transform: scale(1.05);
+
+}
+
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .menu-category {
+        width: 90%;
+    }
+    .menu-category a h3{
+        font-size: 1em;
+    }
+}
+</style>
+
+</body>
+</html>

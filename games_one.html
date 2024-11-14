@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الكلمات المتقاطعة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة الكلمات المتقاطعة</h1>
+        <div id="instructions">
+            <p>طريقة اللعب: قم بملء الكلمات المتقاطعة بناءً على التلميحات المتاحة. اضغط على "لغز جديد" لتوليد شبكة جديدة من الكلمات. إذا كنت بحاجة إلى مساعدة، اضغط على "تلميح".</p>
+        </div>
+        <div id="puzzleContainer"></div>
+        <div class="controls">
+            <button id="newPuzzle">لغز جديد</button>
+            <button id="hint">تلميح</button>
+        </div>
+        <div id="hintBox"></div>
+    </div>
+    
+    <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    max-width: 90%;
+    width: 100%;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: #333;
+}
+
+#instructions {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #555;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#puzzleContainer {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* ملء المساحة المتاحة */
+    grid-gap: 5px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px; /* لتكون الشبكة بحجم مناسب */
+}
+
+.cell {
+    width: 100%; /* حتى تملأ المربع بالكامل */
+    padding-top: 100%; /* يجعل الخلية مربعة الشكل */
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.cell span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.controls {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+#hintBox {
+    margin-top: 10px;
+    color: #555;
+    font-size: 1.2em;
+}
+
+    </style>
+    
+    <script>
+    // كلمات وتلميحات باللغة العربية
+const words = [
+  { word: "تفاحة", hint: "فاكهة تحافظ على صحتك." },
+  { word: "قهوة", hint: "مشروب صباحي مشهور." },
+  { word: "هرم", hint: "معلم أثري في مصر." },
+  { word: "نهر", hint: "مجرى مائي طبيعي." },
+  { word: "سحاب", hint: "كتلة من بخار الماء في السماء." }
+];
+
+// توليد شبكة الألغاز
+function generatePuzzle(words) {
+    let grid = Array(10).fill(null).map(() => Array(10).fill(''));
+
+    words.forEach((wordObj) => {
+        let { word } = wordObj;
+        let row, col, fits;
+        
+        // التحقق من أن الكلمة يمكن وضعها في الشبكة بشكل عشوائي
+        do {
+            row = Math.floor(Math.random() * grid.length);
+            col = Math.floor(Math.random() * (grid[0].length - word.length));
+            fits = true;
+            
+            // التحقق من المساحة المتاحة
+            for (let i = 0; i < word.length; i++) {
+                if (grid[row][col + i] !== '') {
+                    fits = false;
+                    break;
+                }
+            }
+        } while (!fits);
+
+        // وضع الكلمة في الشبكة
+        for (let i = 0; i < word.length; i++) {
+            grid[row][col + i] = word[i];
+        }
+    });
+
+    return grid;
+}
+
+// عرض الشبكة في الصفحة
+function displayPuzzle(grid) {
+    const container = document.getElementById('puzzleContainer');
+    container.innerHTML = '';
+
+    grid.forEach(row => {
+        row.forEach(cell => {
+            const cellDiv = document.createElement('div');
+            cellDiv.className = 'cell';
+            const span = document.createElement('span');
+            span.textContent = cell || '';
+            cellDiv.appendChild(span);
+            container.appendChild(cellDiv);
+        });
+    });
+}
+
+// عرض التلميح
+function showHint(wordObj) {
+    const hintBox = document.getElementById('hintBox');
+    hintBox.textContent = `التلميح: ${wordObj.hint}`;
+}
+
+// إنشاء لغز جديد
+document.getElementById('newPuzzle').addEventListener('click', () => {
+    const grid = generatePuzzle(words);
+    displayPuzzle(grid);
+});
+
+// عرض التلميح عند الضغط
+document.getElementById('hint').addEventListener('click', () => {
+    const randomWord = words[Math.floor(Math.random() * words.length)];
+    showHint(randomWord);
+});
+
+// تشغيل اللعبة لأول مرة
+window.onload = () => {
+    const grid = generatePuzzle(words);
+    displayPuzzle(grid);
+};
+    </script>
+</body>
+</html>

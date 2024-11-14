@@ -1,0 +1,241 @@
+<section class="puzzle-game-section">
+        <div class="container">
+            <h2 class="game-title">لعبة الألغاز!</h2>
+            <p> أجب عن الاسئلة التالية , وتأكد من أن الأجابة مكتوبة بالطريقة الصحيحة </p>            <div id="puzzle-container" class="puzzle-container">
+                <div id="puzzle-question" class="puzzle-question"></div>
+                <input type="text" id="answer-input" class="answer-input" placeholder="اكتب إجابتك هنا">
+                <button id="submit-answer" class="submit-answer">إرسال الإجابة</button>
+            </div>
+            <div class="scoreboard">
+                <p>النقاط: <span id="score">0</span></p>
+                <button id="start-game">ابدأ اللعبة</button>
+            </div>
+            <div id="win-message" class="win-message hidden">
+                <p>مبروك! لقد أنهيت جميع المراحل!</p>
+            </div>
+        </div>
+    </section>
+    /* start IS GAME */
+.puzzle-game-section {
+    padding: 50px 0;
+    text-align: center;
+    background-color: #48cfcb58;
+}
+.puzzle-game-section .container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.puzzle-game-section .game-title {
+    font-size: 2.5rem;
+    color: #113d3e;
+    margin-bottom: 20px;
+}
+.puzzle-game-section .puzzle-container {
+    margin: 20px auto;
+}
+.puzzle-game-section .puzzle-question {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+.puzzle-game-section .answer-input {
+    font-family: "Cairo", sans-serif;
+    padding: 10px;
+    width: 60%;
+    border: 1px solid #00796B;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    direction: rtl;
+    
+}
+.puzzle-game-section .submit-answer {
+    padding: 10px 20px;
+    background-color: #00796B;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    font-family: "Cairo", sans-serif;
+}
+.puzzle-game-section .submit-answer:hover {
+    background-color: #004D40;
+}
+.puzzle-game-section .scoreboard {
+    margin-top: 20px;
+}
+.puzzle-game-section #start-game {
+padding: 2px 10px;
+border-radius: 15%;
+font-size: 15px;
+font-family: "Cairo", sans-serif;
+}
+.puzzle-game-section .win-message {
+    margin-top: 20px;
+    display: none;
+    font-size: 1.5rem;
+    color: #00796B;
+}
+.puzzle-game-section .hidden {
+    display: none; 
+}
+/* end of game code */
+// قسم الألغاز (اللعبة)
+document.addEventListener("DOMContentLoaded", function() {
+    const puzzleContainer = document.getElementById("puzzle-container"); // الحصول على حاوية الألغاز
+    const puzzleQuestionElement = document.getElementById("puzzle-question"); // الحصول على عنصر سؤال اللغز
+    const answerInput = document.getElementById("answer-input"); // الحصول على حقل إدخال الإجابة
+    const submitAnswerButton = document.getElementById("submit-answer"); // الحصول على زر تقديم الإجابة
+    const scoreElement = document.getElementById("score"); // الحصول على عنصر النتيجة
+    const startButton = document.getElementById("start-game"); // الحصول على زر بدء اللعبة
+    const winMessageElement = document.getElementById("win-message"); // الحصول على عنصر رسالة الفوز
+    
+    let score = 0; // متغير لتخزين النتيجة
+    let currentStage = 0; // متغير لتخزين المرحلة الحالية
+
+    // قائمة الألغاز مع الأسئلة والأجوبة
+    const puzzles = [
+        { question: "ما هو الشيء الذي كلما زاد نقص؟", answer: "عمر" },
+        { question: "ما هو الشيء الذي يكتب بلا قلم؟", answer: "قلم" },
+        { question: "ما هو الشيء الذي لا يمشي إلا بالضرب؟", answer: "المسمار" },
+        { question: "ما هو الشيء الذي يخصك ويستخدمه الآخرون أكثر منك؟", answer: "اسمك" },
+        { question: "ما هو الحيوان الذي لا ينام؟", answer: "الخفاش" },
+        { question: "ما هو الشيء الذي يطير بلا أجنحة؟", answer: "الوقت" },
+        { question: "ما هو الشيء الذي يكسر بدون أن يلمس؟", answer: "الوعد" },
+        { question: "ما هو الشيء الذي يحركه الفلاح ويدور في الأرض؟", answer: "المحراث" },
+        { question: "ما هو الشيء الذي يصنع من الماء، ولكن إذا شربته تموت؟", answer: "الثلج" },
+        { question: "ما هو الشيء الذي يمكنك أن تراه في السماء ويكون له ضوء؟", answer: "النجوم" },
+    
+        // أسئلة رياضيات سهلة
+        { question: "ما هو ناتج 2 + 2؟", answer: "4" },
+        { question: "ما هو ناتج 5 * 5؟", answer: "25" },
+        { question: "ما هو عدد زوايا المثلث؟", answer: "3" },
+        { question: "ما هو ناتج 10 - 3؟", answer: "7" },
+        { question: "كم عدد الدقائق في ساعة واحدة؟", answer: "60" },
+        { question: "ما هو العدد الذي يأتي بعد 10؟", answer: "11" },
+        { question: "ما هو ناتج 8 ÷ 4؟", answer: "2" },
+        { question: "كم عدد الأضلاع في مربع؟", answer: "4" },
+        { question: "ما هو العدد الذي يأتي قبل 100؟", answer: "99" },
+        { question: "ما هو مجموع زوايا المستطيل؟", answer: "360" },
+    
+        // أسئلة ذهنية
+        { question: "ما هو الشيء الذي يمشي بلا أرجل؟", answer: "السحاب" },
+        { question: "ما هو الشيء الذي ينكسر إذا قلته؟", answer: "الصمت" },
+        { question: "ما هو الشيء الذي يسمع بلا أذن ويتكلم بلا لسان؟", answer: "الهاتف" },
+        { question: "ما هو الشيء الذي يصعد وينزل بلا أرجل؟", answer: "الدخان" },
+        { question: "ما هو الشيء الذي يمكن كسره لكنه لا يؤلم؟", answer: "الصمت" },
+        { question: "ما هو الشيء الذي إذا مسكته سقط منك؟", answer: "السر" },
+        { question: "ما هو الشيء الذي يضعه الناس في جيوبهم ولا يخرجونه؟", answer: "الأسرار" },
+        { question: "ما هو الشيء الذي يجري بلا ماء؟", answer: "الوقت" },
+        { question: "ما هو الشيء الذي يحتاج إلى التحريك قبل استخدامه؟", answer: "السلم" },
+        { question: "ما هو الشيء الذي له أربعة أرجل في الصباح، واثنان في الظهيرة، وثلاثة في المساء؟", answer: "الإنسان" },
+    
+        // أسئلة تاريخية سهلة
+        { question: "من هو أول رئيس للولايات المتحدة الأمريكية؟", answer: "جورج واشنطن" },
+        { question: "ما هي أول حضارة في التاريخ؟", answer: "حضارة السومريين" },
+        { question: "في أي سنة وقعت الحرب العالمية الثانية؟", answer: "1939" },
+        { question: "ما هو اسم الملك الذي بنى الأهرامات؟", answer: "خوفو" },
+        { question: "ما هو اسم أشهر قادة الثورة الفرنسية؟", answer: "روبسبير" },
+        { question: "من هو مؤسس الإمبراطورية المغولية؟", answer: "جنكيز خان" },
+        { question: "ما هو اسم المدينة التي دمرت في عام 79 م بسبب بركان فيزوف؟", answer: "بومبي" },
+        { question: "من هو الفنان الذي رسم لوحة الموناليزا؟", answer: "ليوناردو دافنشي" },
+        { question: "ما هو اسم أول إنسان صعد إلى الفضاء؟", answer: "يوري غاغارين" },
+        { question: "في أي سنة تم اكتشاف أمريكا؟", answer: "1492" },
+    
+        // أسئلة عن كرة القدم سهلة
+        { question: "ما هو اسم البطولة الأكثر شهرة في كرة القدم؟", answer: "كأس العالم" },
+        { question: "ما هو اسم اللاعب الذي يُعتبر الأفضل في التاريخ؟", answer: "بيليه" },
+        { question: "ما هو عدد اللاعبين في كل فريق في مباراة كرة القدم؟", answer: "11" },
+        { question: "ما هو اسم الفريق الذي فاز بكأس العالم 2018؟", answer: "فرنسا" },
+        { question: "من هو الهداف التاريخي للدوري الإسباني؟", answer: "ليونيل ميسي" },
+        { question: "ما هو اسم الملعب الذي يستضيف نهائي دوري أبطال أوروبا؟", answer: "استاد ويمبلي" },
+        { question: "ما هو اسم الدوري الذي يلعب فيه مانشستر يونايتد؟", answer: "الدوري الإنجليزي" },
+        { question: "من هو اللاعب الذي ارتدى الرقم 7 في ريال مدريد بعد كريستيانو رونالدو؟", answer: "إيدن هازارد" },
+        { question: "ما هو اسم اللاعب الذي يعتبر أسطورة كرة القدم البرازيلية؟", answer: "رونالدينيو" },
+        { question: "ما هي الدولة التي تستضيف كأس العالم 2026؟", answer: "الولايات المتحدة الأمريكية وكندا والمكسيك" },
+    
+        // إضافة 50 سؤال إضافي
+        // أسئلة ذهنية متنوعة
+        { question: "ما هو الشيء الذي يتحدث 100 لغة؟", answer: "الكتاب" },
+        { question: "ما هو الشيء الذي يكون أمامك دائمًا لكنك لا تستطيع رؤيته؟", answer: "المستقبل" },
+        { question: "ما هو الشيء الذي يمكنك أن تحمله ولكن لا يمكنك لمسه؟", answer: "الروح" },
+        { question: "ما هو الشيء الذي يحتوي على العديد من الأرقام ولكنه لا يحتوي على أي حروف؟", answer: "الهاتف" },
+        { question: "ما هو الشيء الذي يشبه الزهرة ولكن لا يمتلك رائحة؟", answer: "الشمس" },
+        { question: "ما هو الشيء الذي يذهب ولا يعود؟", answer: "الوقت" },
+        { question: "ما هو الشيء الذي يذهب إلى المدرسة لكنه لا يتعلم؟", answer: "الحقيبة" },
+        { question: "ما هو الشيء الذي إذا جاع يأكل نفسه؟", answer: "الشعلة" },
+        { question: "ما هو الشيء الذي لديه قلب لكنه ليس حيا؟", answer: "الخرسانة" },
+        { question: "ما هو الشيء الذي يشبه السد ولكن لا يحمل الماء؟", answer: "الجدار" },
+    
+        // أسئلة رياضيات
+        { question: "ما هو ناتج 6 * 7؟", answer: "42" },
+        { question: "ما هو ناتج 12 ÷ 3؟", answer: "4" },
+        { question: "إذا كان لديك 3 تفاحات وأخذت 2، كم تفاحة تبقى؟", answer: "1" },
+        { question: "ما هو الجذر التربيعي للعدد 9؟", answer: "3" },
+        { question: "ما هو عدد الزوايا في المربع؟", answer: "4" },
+        { question: "ما هو العدد الذي يأتي بعد 15؟", answer: "16" },
+        { question: "ما هو حاصل جمع 9 + 10؟", answer: "19" },
+        { question: "كم عدد القلوب في جسم الإنسان؟", answer: "1" },
+        { question: "إذا كان لديك 5 أرانب و2 منها ركضت بعيدًا، كم عدد الأرانب المتبقية؟", answer: "5" },
+        { question: "ما هو مجموع زوايا المستطيل؟", answer: "360" },
+    
+        // أسئلة تاريخية
+        { question: "ما هو اسم العالم الذي اكتشف قانون الجاذبية؟", answer: "إسحاق نيوتن" },
+        { question: "ما هي عاصمة مصر القديمة؟", answer: "طيبة" },
+        { question: "من هو الخليفة الذي أسس الدولة الأموية؟", answer: "معاوية بن أبي سفيان" },
+        { question: "ما هو اسم المدينة التي كانت عاصمة الدولة العثمانية؟", answer: "إسطنبول" },
+        { question: "في أي عام بدأت الثورة الفرنسية؟", answer: "1789" },
+        { question: "من هو مؤسس علم الجبر؟", answer: "الخوارزمي" },
+        { question: "من هو أول إنسان مشى على القمر؟", answer: "نيل أرمسترونغ" },
+        { question: "ما هي الدولة التي استضافت أولمبياد 2008؟", answer: "الصين" },
+        { question: "ما هي أقدم مدينة في التاريخ؟", answer: "أريحا" },
+        { question: "ما هو اسم الملك الذي توج على عرش إنجلترا في عام 1066؟", answer: "ويليام الفاتح" },
+    
+        // أسئلة عن كرة القدم
+        { question: "ما هو الفريق الذي يحمل الرقم القياسي في عدد بطولات دوري أبطال أوروبا؟", answer: "ريال مدريد" },
+        { question: "من هو اللاعب الذي فاز بجائزة الكرة الذهبية أكثر من أي لاعب آخر؟", answer: "ليونيل ميسي" },
+        { question: "ما هو النادي الذي يعتبر الأكثر فوزًا في الدوري الإنجليزي الممتاز؟", answer: "مانشستر يونايتد" },
+        { question: "ما هو اسم المدرب الذي قاد إسبانيا للفوز بكأس العالم 2010؟", answer: "فيكتور مانويل" },
+        { question: "ما هي الدولة التي استضافت كأس العالم 2014؟", answer: "البرازيل" },
+        { question: "من هو اللاعب الذي سجل أكبر عدد من الأهداف في كأس العالم؟", answer: "ميشيل بلاتيني" },
+        { question: "ما هو اسم الفريق الوطني الذي فاز بكأس الأمم الأوروبية 2016؟", answer: "البرتغال" },
+        { question: "من هو اللاعب الذي يعتبر أسطورة نادي برشلونة؟", answer: "ليونيل ميسي" },
+        { question: "ما هو اسم الملعب الذي يستضيف مباريات نادي أرسنال؟", answer: "استاد الإمارات" },
+        { question: "ما هو اسم اللاعب الذي يُعتبر أفضل هداف في تاريخ دوري أبطال أوروبا؟", answer: "Cristiano Ronaldo" },
+    ];
+
+    // بدء اللعبة
+    startButton.addEventListener("click", function() {
+        score = 0; // إعادة تعيين النتيجة
+        currentStage = 0; // إعادة تعيين المرحلة الحالية
+        scoreElement.textContent = score; // تحديث عنصر النتيجة
+        winMessageElement.classList.add("hidden"); // إخفاء رسالة الفوز
+        nextPuzzle(); // الانتقال إلى اللغز التالي
+    });
+
+    // الانتقال إلى اللغز التالي
+    function nextPuzzle() {
+        if (currentStage < puzzles.length) {
+            puzzleQuestionElement.textContent = puzzles[currentStage].question; // عرض السؤال الحالي
+            answerInput.value = ''; // مسح حقل الإدخال
+        } else {
+            winMessageElement.classList.remove("hidden"); // إظهار رسالة الفوز
+            puzzleContainer.style.display = "none"; // إخفاء منطقة الألغاز
+        }
+    }
+
+    // تحقق من الإجابة
+    submitAnswerButton.addEventListener("click", function() {
+        const userAnswer = answerInput.value.trim(); // الحصول على إجابة المستخدم
+        if (userAnswer === puzzles[currentStage].answer) {
+            score++; // زيادة النتيجة
+            scoreElement.textContent = score; // تحديث عنصر النتيجة
+            currentStage++; // الانتقال إلى المرحلة التالية
+            nextPuzzle(); // الانتقال إلى اللغز التالي
+        } else {
+            alert("إجابة خاطئة! حاول مرة أخرى."); // تنبيه عند الإجابة الخاطئة
+        }
+    });
+});
+

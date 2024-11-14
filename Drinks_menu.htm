@@ -1,0 +1,3135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب الطعام</title>
+    <style>
+        body {
+            font-family: "Cairo", sans-serif;
+            background-color: #F5F5F5;
+            color: #05435C;
+            margin: 0;
+            padding: 0;
+            direction: rtl; /* جعل النصوص من اليمين لليسار */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .title h2 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #05435C;
+        }
+
+        .menu-item {
+            background-color: #fbfdfa;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            direction: rtl;
+        }
+
+        .menu-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 15px;
+        }
+
+        .menu-item h3 {
+            font-size: 20px;
+            margin: 0;
+            flex: 1;
+            text-align: right;
+        }
+
+        .primary-text {
+            font-size: 14px;
+            color: #999;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quantity-control button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .quantity-control input {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            border: none;
+            background-color: #f5f5f5;
+        }
+
+        .final-order-button {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-options,
+        .confirmation,
+        .dine-in-form,
+        .delivery-form {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .order-options button,
+        .dine-in-form button,
+        .delivery-form button {
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-options button:hover,
+        .dine-in-form button:hover,
+        .delivery-form button:hover {
+            background-color: #218838;
+        }
+
+        input,
+        textarea {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        select {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .confirmation {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirmation h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #05435C;
+        }
+
+        .confirmation p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .confirmation button {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+        }
+    </style> 
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">
+            <h2>اختار طلبك</h2>
+        </div>
+    <div class="title" id="Drinks">
+        <h2>قائمة المشروبات :</h2>
+        <div class="menu-items">
+            <h2 class="title">HOT DRINKS</h2>
+            <!-- هوت شوكلت -->
+            <div class="menu-item" id="hotChocolateItem" data-item="هوت شوكلت" data-price="50">
+                <img src="img/HOT1.webp" alt="هوت شوكلت" />
+                <h3>هوت شوكلت<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('hotChocolate')">-</button>
+                    <input type="text" id="hotChocolate" value="0" readonly />
+                    <button onclick="increaseQuantity('hotChocolate')">+</button>
+                </div>
+            </div>
+        
+            
+            <div class="menu-item" id="whiteChocolateItem" data-item="وايت شوكلت" data-price="50">
+                <img src="img/HOT2.jpg" alt="وايت شوكلت" />
+                <h3>وايت شوكلت<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('whiteChocolate')">-</button>
+                    <input type="text" id="whiteChocolate" value="0" readonly />
+                    <button onclick="increaseQuantity('whiteChocolate')">+</button>
+                </div>
+            </div>
+            
+
+    <!-- هوت اوريو -->
+    <div class="menu-item" id="hotOreoItem" data-item="هوت اوريو" data-price="60">
+        <img src="img/HOT3.jpg" alt="هوت اوريو" />
+        <h3>هوت اوريو<span class="primary-text"> - 60 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotOreo')">-</button>
+            <input type="text" id="hotOreo" value="0" readonly />
+            <button onclick="increaseQuantity('hotOreo')">+</button>
+        </div>
+    </div>
+
+    <!-- هو مارشميللو -->
+    <div class="menu-item" id="hotMarshmallowItem" data-item="هوت مارشميللو" data-price="60">
+        <img src="img/HOT4.jpg" alt="هوت مارشميللو" />
+        <h3>هو مارشميللو<span class="primary-text"> - 60 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotMarshmallow')">-</button>
+            <input type="text" id="hotMarshmallow" value="0" readonly />
+            <button onclick="increaseQuantity('hotMarshmallow')">+</button>
+        </div>
+    </div>
+
+    <!-- هوت لوتس -->
+    <div class="menu-item" id="hotLotusItem" data-item="هوت لوتس" data-price="75">
+        <img src="img/HOT5.jpeg" alt="هوت لوتس" />
+        <h3>هوت لوتس<span class="primary-text"> - 75 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotLotus')">-</button>
+            <input type="text" id="hotLotus" value="0" readonly />
+            <button onclick="increaseQuantity('hotLotus')">+</button>
+        </div>
+    </div>
+
+    <!-- هوت توينكيز -->
+    <div class="menu-item" id="hotTwinkiesItem" data-item="هوت توينكيز" data-price="60">
+        <img src="img/HOT6.jpeg" alt="هوت توينكيز" />
+        <h3>هوت توينكيز<span class="primary-text"> - 60 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotTwinkies')">-</button>
+            <input type="text" id="hotTwinkies" value="0" readonly />
+            <button onclick="increaseQuantity('hotTwinkies')">+</button>
+        </div>
+    </div>
+
+    <!-- هوت شوكلت باريستا -->
+    <div class="menu-item" id="hotBaristaChocolateItem" data-item="هوت شوكلت باريستا" data-price="80">
+        <img src="img/HOT7.jpg" alt="هوت شوكلت باريستا" />
+        <h3>هوت شوكلت باريستا<span class="primary-text"> - 80 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotBaristaChocolate')">-</button>
+            <input type="text" id="hotBaristaChocolate" value="0" readonly />
+            <button onclick="increaseQuantity('hotBaristaChocolate')">+</button>
+        </div>
+    </div>
+
+    <!-- هوت سيدر -->
+    <div class="menu-item" id="hotCiderItem" data-item="هوت سيدر" data-price="50">
+        <img src="img/HOT8.jpg" alt="هوت سيدر" />
+        <h3>هوت سيدر<span class="primary-text"> - 50 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('hotCider')">-</button>
+            <input type="text" id="hotCider" value="0" readonly />
+            <button onclick="increaseQuantity('hotCider')">+</button>
+        </div>
+    </div>
+
+    <!-- شاي -->
+    <div class="menu-item" id="teaItem" data-item="شاي" data-price="20">
+        <img src="img/HOT9.jpeg" alt="شاي" />
+        <h3>شاي<span class="primary-text"> - 20 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('tea')">-</button>
+            <input type="text" id="tea" value="0" readonly />
+            <button onclick="increaseQuantity('tea')">+</button>
+        </div>
+    </div>
+
+    <!-- شاي اخضر -->
+    <div class="menu-item" id="greenTeaItem" data-item="شاي اخضر" data-price="20">
+        <img src="img/HOT10.webp" alt="شاي اخضر" />
+        <h3>شاي اخضر<span class="primary-text"> - 20 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('greenTea')">-</button>
+            <input type="text" id="greenTea" value="0" readonly />
+            <button onclick="increaseQuantity('greenTea')">+</button>
+        </div>
+    </div>
+
+    <!-- شاي فليفر -->
+    <div class="menu-item" id="flavoredTeaItem" data-item="شاي فليفر" data-price="25">
+        <img src="img/HOT11.jpg" alt="شاي فليفر" />
+        <h3>شاي فليفر<span class="primary-text"> - 25 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('flavoredTea')">-</button>
+            <input type="text" id="flavoredTea" value="0" readonly />
+            <button onclick="increaseQuantity('flavoredTea')">+</button>
+        </div>
+    </div>
+
+    <!-- اعشاب -->
+    <div class="menu-item" id="herbalTeaItem" data-item="اعشاب" data-price="20">
+        <img src="img/HOT12.webp" alt="اعشاب" />
+        <h3>اعشاب<span class="primary-text"> - 20 EGP</span></h3>
+        <div class="quantity-control">
+            <button onclick="decreaseQuantity('herbalTea')">-</button>
+            <input type="text" id="herbalTea" value="0" readonly />
+            <button onclick="increaseQuantity('herbalTea')">+</button>
+        </div>
+    </div>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">HOT COFFEE</h2>
+            
+            <div class="menu-item" id="turkishCoffeeItem" data-item="قهوة تركي" data-price="40">
+                <img src="img/HOT2.jpg" alt="قهوة تركي" />
+                <h3>قهوة تركي<span class="primary-text"> -> L: 40 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('turkishCoffee')">-</button>
+                    <input type="text" id="turkishCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('turkishCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="frenchCoffeeItem" data-item="قهوة فرنساوي" data-price="50">
+                <img src="img/HOT2.jpg" alt="قهوة فرنساوي" />
+                <h3>قهوة فرنساوي<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('frenchCoffee')">-</button>
+                    <input type="text" id="frenchCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('frenchCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="hazelnutCoffeeItem" data-item="قهوة بندق" data-price="55">
+                <img src="img/HOT2.jpg" alt="قهوة بندق" />
+                <h3>قهوة بندق<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('hazelnutCoffee')">-</button>
+                    <input type="text" id="hazelnutCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('hazelnutCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="caramelCoffeeItem" data-item="قهوة كراميل" data-price="50">
+                <img src="img/HOT2.jpg" alt="قهوة كراميل" />
+                <h3>قهوة كراميل<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('caramelCoffee')">-</button>
+                    <input type="text" id="caramelCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('caramelCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="nutellaCoffeeItem" data-item="قهوة نوتيلا" data-price="55">
+                <img src="img/HOT2.jpg" alt="قهوة نوتيلا" />
+                <h3>قهوة نوتيلا<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('nutellaCoffee')">-</button>
+                    <input type="text" id="nutellaCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('nutellaCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="espressoCoffeeItem" data-item="قهوة اسبريسو" data-price="60">
+                <img src="img/HOT2.jpg" alt="قهوة اسبريسو" />
+                <h3>قهوة اسبريسو<span class="primary-text"> -> L: 60 EGP</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('espressoCoffee')">-</button>
+                    <input type="text" id="espressoCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('espressoCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="macchiatoCoffeeItem" data-item="قهوة ميكاتو" data-price="55">
+                <img src="img/HOT2.jpg" alt="قهوة ميكاتو" />
+                <h3>قهوة ميكاتو<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('macchiatoCoffee')">-</button>
+                    <input type="text" id="macchiatoCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('macchiatoCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="americanCoffeeItem" data-item="امريكان كوفي" data-price="55">
+                <img src="img/HOT2.jpg" alt="امريكان كوفي" />
+                <h3>امريكان كوفي<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('americanCoffee')">-</button>
+                    <input type="text" id="americanCoffee" value="0" readonly />
+                    <button onclick="increaseQuantity('americanCoffee')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="nescafeFlavorItem" data-item="نسكافية فليفر" data-price="55">
+                <img src="img/HOT2.jpg" alt="نسكافية فليفر" />
+                <h3>نسكافية فليفر<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('nescafeFlavor')">-</button>
+                    <input type="text" id="nescafeFlavor" value="0" readonly />
+                    <button onclick="increaseQuantity('nescafeFlavor')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="cappuccinoItem" data-item="كابتشينوا" data-price="60">
+                <img src="img/HOT2.jpg" alt="كابتشينوا" />
+                <h3>كابتشينوا<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('cappuccino')">-</button>
+                    <input type="text" id="cappuccino" value="0" readonly />
+                    <button onclick="increaseQuantity('cappuccino')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="latteFlavorItem" data-item="لاتية فليفر" data-price="60">
+                <img src="img/HOT2.jpg" alt="لاتية فليفر" />
+                <h3>لاتية فليفر<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('latteFlavor')">-</button>
+                    <input type="text" id="latteFlavor" value="0" readonly />
+                    <button onclick="increaseQuantity('latteFlavor')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="pistachioLatteItem" data-item="لاتية فسدق" data-price="70">
+                <img src="img/HOT2.jpg" alt="لاتية فسدق" />
+                <h3>لاتية فسدق<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('pistachioLatte')">-</button>
+                    <input type="text" id="pistachioLatte" value="0" readonly />
+                    <button onclick="increaseQuantity('pistachioLatte')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="hammerHeadItem" data-item="هامر هيد" data-price="65">
+                <img src="img/HOT2.jpg" alt="هامر هيد" />
+                <h3>هامر هيد<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('hammerHead')">-</button>
+                    <input type="text" id="hammerHead" value="0" readonly />
+                    <button onclick="increaseQuantity('hammerHead')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="strongHeadItem" data-item="استرونج هيد" data-price="75">
+                <img src="img/HOT2.jpg" alt="استرونج هيد" />
+                <h3>استرونج هيد<span class="primary-text"> -> 75 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('strongHead')">-</button>
+                    <input type="text" id="strongHead" value="0" readonly />
+                    <button onclick="increaseQuantity('strongHead')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="darkCaramelMochItem" data-item="موك ( دارك كراميل)" data-price="75">
+                <img src="img/HOT2.jpg" alt="موك ( دارك كراميل)" />
+                <h3>موك ( دارك كراميل)<span class="primary-text"> -> 75 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('darkCaramelMoch')">-</button>
+                    <input type="text" id="darkCaramelMoch" value="0" readonly />
+                    <button onclick="increaseQuantity('darkCaramelMoch')">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">BAKERY</h2>
+            <div class="menu-item" id="cinnamonRollItem" data-item="سينابون" data-price="60">
+                <img src="img/HOT2.jpg" alt="سينابون" />
+                <h3>سينابون<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('cinnamonRoll')">-</button>
+                    <input type="text" id="cinnamonRoll" value="0" readonly />
+                    <button onclick="increaseQuantity('cinnamonRoll')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="donutItem" data-item="دونت" data-price="45">
+                <img src="img/HOT2.jpg" alt="دونت" />
+                <h3>دونت<span class="primary-text"> -> 45 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('donut')">-</button>
+                    <input type="text" id="donut" value="0" readonly />
+                    <button onclick="increaseQuantity('donut')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="croissantItem" data-item="كرواسون" data-price="50">
+                <img src="img/HOT2.jpg" alt="كرواسون" />
+                <h3>كرواسون<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('croissant')">-</button>
+                    <input type="text" id="croissant" value="0" readonly />
+                    <button onclick="increaseQuantity('croissant')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">ICE COFFEE</h2>
+            <div class="menu-item" id="iceNescafeItem" data-item="ايس نسكافيه" data-price="55">
+                <img src="img/HOT2.jpg" alt="ايس نسكافيه" />
+                <h3>ايس نسكافيه<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceNescafe')">-</button>
+                    <input type="text" id="iceNescafe" value="0" readonly />
+                    <button onclick="increaseQuantity('iceNescafe')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="iceLatteItem" data-item="ايس لاتيه" data-price="60">
+                <img src="img/HOT2.jpg" alt="ايس لاتيه" />
+                <h3>ايس لاتيه<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceLatte')">-</button>
+                    <input type="text" id="iceLatte" value="0" readonly />
+                    <button onclick="increaseQuantity('iceLatte')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="iceCappuccinoItem" data-item="ايس كابتشينو" data-price="60">
+                <img src="img/HOT2.jpg" alt="ايس كابتشينو" />
+                <h3>ايس كابتشينو<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceCappuccino')">-</button>
+                    <input type="text" id="iceCappuccino" value="0" readonly />
+                    <button onclick="increaseQuantity('iceCappuccino')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="iceMochaItem" data-item="ايس موكا" data-price="70">
+                <img src="img/HOT2.jpg" alt="ايس موكا" />
+                <h3>ايس موكا<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceMocha')">-</button>
+                    <input type="text" id="iceMocha" value="0" readonly />
+                    <button onclick="increaseQuantity('iceMocha')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="chocolashItem" data-item="شوكلاش (درات كراميل - وايت)" data-price="65">
+                <img src="img/HOT2.jpg" alt="شوكلاش" />
+                <h3>شوكلاش (درات كراميل - وايت)<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('chocolash')">-</button>
+                    <input type="text" id="chocolash" value="0" readonly />
+                    <button onclick="increaseQuantity('chocolash')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="frietMochaItem" data-item="فرايته موكا (ايس كريم - استريبس - صوص درات شوكلت)" data-price="70">
+                <img src="img/HOT2.jpg" alt="فرايته موكا" />
+                <h3>فرايته موكا (ايس كريم - استريبس - صوص درات شوكلت)<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('frietMocha')">-</button>
+                    <input type="text" id="frietMocha" value="0" readonly />
+                    <button onclick="increaseQuantity('frietMocha')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="frietItem" data-item="فرايته (فانليا - درات كراميل - شوكلت - فراولة - تفاح - باديجي)" data-price="65">
+                <img src="img/HOT2.jpg" alt="فرايته" />
+                <h3>فرايته (فانليا - درات كراميل - شوكلت - فراولة - تفاح - باديجي)<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('friet')">-</button>
+                    <input type="text" id="friet" value="0" readonly />
+                    <button onclick="increaseQuantity('friet')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">ICE-CREAM</h2>
+            <div class="menu-item" id="iceCreamSauceItem" data-item="ايسكريم صوص" data-price="40">
+                <img src="img/HOT2.jpg" alt="ايسكريم صوص" />
+                <h3>ايسكريم صوص<span class="primary-text"> -> 40 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceCreamSauce')">-</button>
+                    <input type="text" id="iceCreamSauce" value="0" readonly />
+                    <button onclick="increaseQuantity('iceCreamSauce')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="iceSunDairyBaristaItem" data-item="ايس صن داري باريستا (فانليا - شوكلت - مانجو - فراولة)" data-price="70">
+                <img src="img/HOT2.jpg" alt="ايس صن داري باريستا" />
+                <h3>ايس صن داري باريستا (فانليا - شوكلت - مانجو - فراولة)<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceSunDairyBarista')">-</button>
+                    <input type="text" id="iceSunDairyBarista" value="0" readonly />
+                    <button onclick="increaseQuantity('iceSunDairyBarista')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="iceMadnessItem" data-item="ايس مادنيس (كورنيدو - كيكتات - اوريو - جانكاش - سيدرا - فلوتس - جيرمي ميلك)" data-price="75">
+                <img src="img/HOT2.jpg" alt="ايس مادنيس" />
+                <h3>ايس مادنيس (كورنيدو - كيكتات - اوريو - جانكاش - سيدرا - فلوتس - جيرمي ميلك)<span class="primary-text"> -> 75 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('iceMadness')">-</button>
+                    <input type="text" id="iceMadness" value="0" readonly />
+                    <button onclick="increaseQuantity('iceMadness')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">ZABDO</h2>
+            <div class="menu-item" id="peachItem" data-item="خوخ" data-price="65">
+                <img src="img/HOT2.jpg" alt="خوخ" />
+                <h3>خوخ<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('peach')">-</button>
+                    <input type="text" id="peach" value="0" readonly />
+                    <button onclick="increaseQuantity('peach')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="blackberryItem" data-item="توت بري" data-price="70">
+                <img src="img/HOT2.jpg" alt="توت بري" />
+                <h3>توت بري<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('blackberry')">-</button>
+                    <input type="text" id="blackberry" value="0" readonly />
+                    <button onclick="increaseQuantity('blackberry')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="blueberryItem" data-item="توت أزرق" data-price="70">
+                <img src="img/HOT2.jpg" alt="توت أزرق" />
+                <h3>توت أزرق<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('blueberry')">-</button>
+                    <input type="text" id="blueberry" value="0" readonly />
+                    <button onclick="increaseQuantity('blueberry')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="kiwiItem" data-item="كيوي" data-price="70">
+                <img src="img/HOT2.jpg" alt="كيوي" />
+                <h3>كيوي<span class="primary-text"> -> 70 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('kiwi')">-</button>
+                    <input type="text" id="kiwi" value="0" readonly />
+                    <button onclick="increaseQuantity('kiwi')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="strawberryItem" data-item="فراولة" data-price="60">
+                <img src="img/HOT2.jpg" alt="فراولة" />
+                <h3>فراولة<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('strawberry')">-</button>
+                    <input type="text" id="strawberry" value="0" readonly />
+                    <button onclick="increaseQuantity('strawberry')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SMOOTHIE</h2>
+            <div class="menu-item" id="strawberryhItem" data-item="فراولة" data-price="60">
+                <img src="img/HOT3.jpg" alt="فراولة" />
+                <h3>فراولة<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('strawberryh')">-</button>
+                    <input type="text" id="strawberryh" value="0" readonly />
+                    <button onclick="increaseQuantity('strawberryh')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="redBerryItem" data-item="توت أحمر , أزرق" data-price="65">
+                <img src="img/HOT4.jpg" alt="توت أحمر" />
+                <h3> توت " أحمر , أزرق "<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('redBerry')">-</button>
+                    <input type="text" id="redBerry" value="0" readonly />
+                    <button onclick="increaseQuantity('redBerry')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="tropicalItem" data-item="فواكه استوائية" data-price="60">
+                <img src="img/HOT6.jpg" alt="فواكه استوائية" />
+                <h3>فواكه استوائية<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('tropical')">-</button>
+                    <input type="text" id="tropical" value="0" readonly />
+                    <button onclick="increaseQuantity('tropical')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="lemonItem" data-item="ليمون" data-price="50">
+                <img src="img/HOT7.jpg" alt="ليمون" />
+                <h3>ليمون<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('lemon')">-</button>
+                    <input type="text" id="lemon" value="0" readonly />
+                    <button onclick="increaseQuantity('lemon')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="mintLemonItem" data-item="ليمون نعناع" data-price="60">
+                <img src="img/HOT8.jpg" alt="ليمون نعناع" />
+                <h3>ليمون نعناع<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('mintLemon')">-</button>
+                    <input type="text" id="mintLemon" value="0" readonly />
+                    <button onclick="increaseQuantity('mintLemon')">+</button>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="kiwimItem" data-item="كيوي" data-price="80">
+                <img src="img/HOT9.jpg" alt="كيوي" />
+                <h3>كيوي<span class="primary-text"> -> 80 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('kiwim')">-</button>
+                    <input type="text" id="kiwim" value="0" readonly />
+                    <button onclick="increaseQuantity('kiwim')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">FRESH JUICE</h2>
+            <div class="menu-item" id="lemonItem" data-item="ليمون" data-price="50">
+                <img src="img/lemon.jpg" alt="ليمون" />
+                <h3>ليمون<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('lemon')">-</button>
+                    <input type="text" id="lemon" value="0" readonly />
+                    <button onclick="increaseQuantity('lemon')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="lemonMintItem" data-item="ليمون نعناع" data-price="55">
+                <img src="img/lemon-mint.jpg" alt="ليمون نعناع" />
+                <h3>ليمون نعناع<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('lemonMint')">-</button>
+                    <input type="text" id="lemonMint" value="0" readonly />
+                    <button onclick="increaseQuantity('lemonMint')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="turkishLemonMintItem" data-item="ليمون نعناع تركي" data-price="60">
+                <img src="img/turkish-lemon-mint.jpg" alt="ليمون نعناع تركي" />
+                <h3>ليمون نعناع تركي<span class="primary-text"> -> 60 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('turkishLemonMint')">-</button>
+                    <input type="text" id="turkishLemonMint" value="0" readonly />
+                    <button onclick="increaseQuantity('turkishLemonMint')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="orangeItem" data-item="برتقال" data-price="50">
+                <img src="img/orange.jpg" alt="برتقال" />
+                <h3>برتقال<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('orange')">-</button>
+                    <input type="text" id="orange" value="0" readonly />
+                    <button onclick="increaseQuantity('orange')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="bananaMilkItem" data-item="موز حليب" data-price="55">
+                <img src="img/banana-milk.jpg" alt="موز حليب" />
+                <h3>موز حليب<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('bananaMilk')">-</button>
+                    <input type="text" id="bananaMilk" value="0" readonly />
+                    <button onclick="increaseQuantity('bananaMilk')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="dateMilkItem" data-item="بلح حليب" data-price="55">
+                <img src="img/date-milk.jpg" alt="بلح حليب" />
+                <h3>بلح حليب<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('dateMilk')">-</button>
+                    <input type="text" id="dateMilk" value="0" readonly />
+                    <button onclick="increaseQuantity('dateMilk')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="strawberryMilkItem" data-item="فراولة حليب" data-price="55">
+                <img src="img/strawberry-milk.jpg" alt="فراولة حليب" />
+                <h3>فراولة حليب<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('strawberryMilk')">-</button>
+                    <input type="text" id="strawberryMilk" value="0" readonly />
+                    <button onclick="increaseQuantity('strawberryMilk')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="mangoItem" data-item="مانجو" data-price="55">
+                <img src="img/mango.jpg" alt="مانجو" />
+                <h3>مانجو<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('mango')">-</button>
+                    <input type="text" id="mango" value="0" readonly />
+                    <button onclick="increaseQuantity('mango')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="kiwiItem" data-item="كيوي" data-price="55">
+                <img src="img/kiwi.jpg" alt="كيوي" />
+                <h3>كيوي<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('kiwi')">-</button>
+                    <input type="text" id="kiwi" value="0" readonly />
+                    <button onclick="increaseQuantity('kiwi')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="watermelonItem" data-item="بطيخ" data-price="55">
+                <img src="img/watermelon.jpg" alt="بطيخ" />
+                <h3>بطيخ<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('watermelon')">-</button>
+                    <input type="text" id="watermelon" value="0" readonly />
+                    <button onclick="increaseQuantity('watermelon')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="guavaMilkItem" data-item="جوافة حليب" data-price="55">
+                <img src="img/guava-milk.jpg" alt="جوافة حليب" />
+                <h3>جوافة حليب<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('guavaMilk')">-</button>
+                    <input type="text" id="guavaMilk" value="0" readonly />
+                    <button onclick="increaseQuantity('guavaMilk')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="guavaMintItem" data-item="جوافة نعناع" data-price="55">
+                <img src="img/guava-mint.jpg" alt="جوافة نعناع" />
+                <h3>جوافة نعناع<span class="primary-text"> -> 55 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('guavaMint')">-</button>
+                    <input type="text" id="guavaMint" value="0" readonly />
+                    <button onclick="increaseQuantity('guavaMint')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="mangoOrangeItem" data-item="مانجو برتقال" data-price="65">
+                <img src="img/mango-orange.jpg" alt="مانجو برتقال" />
+                <h3>مانجو برتقال<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('mangoOrange')">-</button>
+                    <input type="text" id="mangoOrange" value="0" readonly />
+                    <button onclick="increaseQuantity('mangoOrange')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="mangoKiwiItem" data-item="مانجو كيوي" data-price="75">
+                <img src="img/mango-kiwi.jpg" alt="مانجو كيوي" />
+                <h3>مانجو كيوي<span class="primary-text"> -> 75 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('mangoKiwi')">-</button>
+                    <input type="text" id="mangoKiwi" value="0" readonly />
+                    <button onclick="increaseQuantity('mangoKiwi')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="mangoPineappleItem" data-item="مانجو أناناس" data-price="65">
+                <img src="img/mango-pineapple.jpg" alt="مانجو أناناس" />
+                <h3>مانجو أناناس<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('mangoPineapple')">-</button>
+                    <input type="text" id="mangoPineapple" value="0" readonly />
+                    <button onclick="increaseQuantity('mangoPineapple')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="kiwiPineappleItem" data-item="كيوي أناناس" data-price="75">
+                <img src="img/kiwi-pineapple.jpg" alt="كيوي أناناس" />
+                <h3>كيوي أناناس<span class="primary-text"> -> 75 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('kiwiPineapple')">-</button>
+                    <input type="text" id="kiwiPineapple" value="0" readonly />
+                    <button onclick="increaseQuantity('kiwiPineapple')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="kiwiOrangeItem" data-item="كيوي برتقال" data-price="65">
+                <img src="img/kiwi-orange.jpg" alt="كيوي برتقال" />
+                <h3>كيوي برتقال<span class="primary-text"> -> 65 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('kiwiOrange')">-</button>
+                    <input type="text" id="kiwiOrange" value="0" readonly />
+                    <button onclick="increaseQuantity('kiwiOrange')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="specialBarbistaItem" data-item="سبيشيال باربيستا" data-price="95">
+                <img src="img/special-barbista.jpg" alt="سبيشيال باربيستا" />
+                <h3>سبيشيال باربيستا<span class="primary-text"> -> 95 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('specialBarbista')">-</button>
+                    <input type="text" id="specialBarbista" value="0" readonly />
+                    <button onclick="increaseQuantity('specialBarbista')">+</button>
+                </div>
+            </div>
+            <div class="menu-item" id="strawberry50Item" data-item="فراولة" data-price="50">
+                <img src="img/strawberry-50.jpg" alt="فراولة" />
+                <h3>فراولة<span class="primary-text"> -> 50 EGP :</span></h3>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('strawberry50')">-</button>
+                    <input type="text" id="strawberry50" value="0" readonly />
+                    <button onclick="increaseQuantity('strawberry50')">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <h2 class="title">MILKSHAKE</h2>
+        <!-- فانيليا -->
+<div class="menu-item" id="vanillaMilkshakeItem" data-item="فانيليا" data-price="55">
+    <img src="img/vanilla_milkshake.jpg" alt="فانيليا" />
+    <h3>فانيليا<span class="primary-text"> -> 55 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('vanillaMilkshake')">-</button>
+        <input type="text" id="vanillaMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('vanillaMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- شوكلت -->
+<div class="menu-item" id="chocolateMilkshakeItem" data-item="شوكلت" data-price="60">
+    <img src="img/chocolate_milkshake.jpg" alt="شوكلت" />
+    <h3>شوكلت<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chocolateMilkshake')">-</button>
+        <input type="text" id="chocolateMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('chocolateMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- كراميل -->
+<div class="menu-item" id="caramelMilkshakeItem" data-item="كراميل" data-price="60">
+    <img src="img/caramel_milkshake.jpg" alt="كراميل" />
+    <h3>كراميل<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('caramelMilkshake')">-</button>
+        <input type="text" id="caramelMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('caramelMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- لوتس -->
+<div class="menu-item" id="lotusMilkshakeItem" data-item="لوتس" data-price="80">
+    <img src="img/lotus_milkshake.jpg" alt="لوتس" />
+    <h3>لوتس<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('lotusMilkshake')">-</button>
+        <input type="text" id="lotusMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('lotusMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- اوريو -->
+<div class="menu-item" id="oreoMilkshakeItem" data-item="اوريو" data-price="65">
+    <img src="img/oreo_milkshake.jpg" alt="اوريو" />
+    <h3>اوريو<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('oreoMilkshake')">-</button>
+        <input type="text" id="oreoMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('oreoMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- نوتيلا -->
+<div class="menu-item" id="nutellaMilkshakeItem" data-item="نوتيلا" data-price="65">
+    <img src="img/nutella_milkshake.jpg" alt="نوتيلا" />
+    <h3>نوتيلا<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('nutellaMilkshake')">-</button>
+        <input type="text" id="nutellaMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('nutellaMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- توت ازرق -->
+<div class="menu-item" id="blueberryMilkshakeItem" data-item="توت ازرق" data-price="65">
+    <img src="img/blueberry_milkshake.jpg" alt="توت ازرق" />
+    <h3>توت ازرق<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('blueberryMilkshake')">-</button>
+        <input type="text" id="blueberryMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('blueberryMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- توت احمر -->
+<div class="menu-item" id="redberryMilkshakeItem" data-item="توت احمر" data-price="60">
+    <img src="img/redberry_milkshake.jpg" alt="توت احمر" />
+    <h3>توت احمر<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('redberryMilkshake')">-</button>
+        <input type="text" id="redberryMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('redberryMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- ميكس بيري -->
+<div class="menu-item" id="berryMixMilkshakeItem" data-item="ميكس بيري" data-price="70">
+    <img src="img/berry_mix_milkshake.jpg" alt="ميكس بيري" />
+    <h3>ميكس بيري<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('berryMixMilkshake')">-</button>
+        <input type="text" id="berryMixMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('berryMixMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- تفاح اخضر -->
+<div class="menu-item" id="greenAppleMilkshakeItem" data-item="تفاح اخضر" data-price="60">
+    <img src="img/green_apple_milkshake.jpg" alt="تفاح اخضر" />
+    <h3>تفاح اخضر<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('greenAppleMilkshake')">-</button>
+        <input type="text" id="greenAppleMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('greenAppleMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- فواكه استوائية -->
+<div class="menu-item" id="tropicalFruitsMilkshakeItem" data-item="فواكه استوائية" data-price="65">
+    <img src="img/tropical_fruits_milkshake.jpg" alt="فواكه استوائية" />
+    <h3>فواكه استوائية<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('tropicalFruitsMilkshake')">-</button>
+        <input type="text" id="tropicalFruitsMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('tropicalFruitsMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- فراولة -->
+<div class="menu-item" id="strawberryMilkshakeItem" data-item="فراولة" data-price="65">
+    <img src="img/strawberry_milkshake.jpg" alt="فراولة" />
+    <h3>فراولة<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('strawberryMilkshake')">-</button>
+        <input type="text" id="strawberryMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('strawberryMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- كيوي -->
+<div class="menu-item" id="kiwiMilkshakeItem" data-item="كيوي" data-price="70">
+    <img src="img/kiwi_milkshake.jpg" alt="كيوي" />
+    <h3>كيوي<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('kiwiMilkshake')">-</button>
+        <input type="text" id="kiwiMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('kiwiMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- اناناس -->
+<div class="menu-item" id="pineappleMilkshakeItem" data-item="اناناس" data-price="65">
+    <img src="img/pineapple_milkshake.jpg" alt="اناناس" />
+    <h3>اناناس<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pineappleMilkshake')">-</button>
+        <input type="text" id="pineappleMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('pineappleMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- خوخ -->
+<div class="menu-item" id="peachMilkshakeItem" data-item="خوخ" data-price="65">
+    <img src="img/peach_milkshake.jpg" alt="خوخ" />
+    <h3>خوخ<span class="primary-text"> -> 65 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('peachMilkshake')">-</button>
+        <input type="text" id="peachMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('peachMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- مانجو -->
+<div class="menu-item" id="mangoMilkshakeItem" data-item="مانجو" data-price="60">
+    <img src="img/mango_milkshake.jpg" alt="مانجو" />
+    <h3>مانجو<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('mangoMilkshake')">-</button>
+        <input type="text" id="mangoMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('mangoMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- كريزي شوكلت -->
+<div class="menu-item" id="crazyChocolateMilkshakeItem" data-item="كريزي شوكلت" data-price="85">
+    <img src="img/crazy_chocolate_milkshake.jpg" alt="كريزي شوكلت" />
+    <h3>كريزي شوكلت<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('crazyChocolateMilkshake')">-</button>
+        <input type="text" id="crazyChocolateMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('crazyChocolateMilkshake')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">MILK SHAKE</h2>
+            <!-- فسدق -->
+<div class="menu-item" id="pistachioMilkshakeItem" data-item="فسدق" data-price="85">
+    <img src="img/pistachio_milkshake.jpg" alt="فسدق" />
+    <h3>فسدق<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pistachioMilkshake')">-</button>
+        <input type="text" id="pistachioMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('pistachioMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- ميلك شيك من اختيارك (سبيشيال باريستا) -->
+<div class="menu-item" id="baristaSpecialMilkshakeItem" data-item="سبيشيال باريستا" data-price="85">
+    <img src="img/barista_special_milkshake.jpg" alt="سبيشيال باريستا" />
+    <h3>ميلك شيك من اختيارك (سبيشيال باريستا)<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('baristaSpecialMilkshake')">-</button>
+        <input type="text" id="baristaSpecialMilkshake" value="0" readonly />
+        <button onclick="increaseQuantity('baristaSpecialMilkshake')">+</button>
+    </div>
+</div>
+
+<!-- بنانا بيري -->
+<div class="menu-item" id="bananaBerryItem" data-item="بنانا بيري" data-price="80">
+    <img src="img/banana_berry.jpg" alt="بنانا بيري" />
+    <h3>بنانا بيري<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('bananaBerry')">-</button>
+        <input type="text" id="bananaBerry" value="0" readonly />
+        <button onclick="increaseQuantity('bananaBerry')">+</button>
+    </div>
+</div>
+
+<!-- بنانا فسدق -->
+<div class="menu-item" id="bananaPistachioItem" data-item="بنانا فسدق" data-price="90">
+    <img src="img/banana_pistachio.jpg" alt="بنانا فسدق" />
+    <h3>بنانا فسدق<span class="primary-text"> -> 90 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('bananaPistachio')">-</button>
+        <input type="text" id="bananaPistachio" value="0" readonly />
+        <button onclick="increaseQuantity('bananaPistachio')">+</button>
+    </div>
+</div>
+
+<!-- شوكلت -->
+<div class="menu-item" id="chocolateItem" data-item="شوكلت" data-price="85">
+    <img src="img/chocolate.jpg" alt="شوكلت" />
+    <h3>شوكلت<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chocolate')">-</button>
+        <input type="text" id="chocolate" value="0" readonly />
+        <button onclick="increaseQuantity('chocolate')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SOFT DRINKS</h2>
+        <!-- ميكس سوفتي -->
+<div class="menu-item" id="mixSoftyItem" data-item="ميكس سوفت" data-price="70">
+    <img src="img/mix_softy.jpg" alt="ميكس سوفتي" />
+    <h3>ميكس سوفت (برتقال، يوسفي, كيوي , كرايز، فواكه استوائية)<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('mixSofty')">-</button>
+        <input type="text" id="mixSofty" value="0" readonly />
+        <button onclick="increaseQuantity('mixSofty')">+</button>
+    </div>
+</div>
+
+<!-- بلو سكاي -->
+<div class="menu-item" id="blueSkyItem" data-item="بلو سكاي" data-price="60">
+    <img src="img/blue_sky.jpg" alt="بلو سكاي" />
+    <h3>بلو سكاي (برتقال، أناناس)<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('blueSky')">-</button>
+        <input type="text" id="blueSky" value="0" readonly />
+        <button onclick="increaseQuantity('blueSky')">+</button>
+    </div>
+</div>
+
+<!-- بلو باشون -->
+<div class="menu-item" id="bluePassionItem" data-item="بلو باشون" data-price="60">
+    <img src="img/blue_passion.jpg" alt="بلو باشون" />
+    <h3>بلو باشون (برتقال، فواكه استوائية)<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('bluePassion')">-</button>
+        <input type="text" id="bluePassion" value="0" readonly />
+        <button onclick="increaseQuantity('bluePassion')">+</button>
+    </div>
+</div>
+
+<!-- موهيتو -->
+<div class="menu-item" id="mojitoItem" data-item="موهيتو" data-price="60">
+    <img src="img/mojito.jpg" alt="موهيتو" />
+    <h3>موهيتو (ليمون، نعناع، توت أزرق، بطيخ، فواكه استوائية)<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('mojito')">-</button>
+        <input type="text" id="mojito" value="0" readonly />
+        <button onclick="increaseQuantity('mojito')">+</button>
+    </div>
+</div>
+
+<!-- بيبسي -->
+<div class="menu-item" id="pepsiItem" data-item="بيبسي" data-price="25">
+    <img src="img/pepsi.jpg" alt="بيبسي" />
+    <h3>بيبسي<span class="primary-text"> -> 25 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pepsi')">-</button>
+        <input type="text" id="pepsi" value="0" readonly />
+        <button onclick="increaseQuantity('pepsi')">+</button>
+    </div>
+</div>
+
+<!-- سفن اب -->
+<div class="menu-item" id="sevenUpItem" data-item="سفن اب" data-price="25">
+    <img src="img/seven_up.jpg" alt="سفن اب" />
+    <h3>سفن اب<span class="primary-text"> -> 25 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sevenUp')">-</button>
+        <input type="text" id="sevenUp" value="0" readonly />
+        <button onclick="increaseQuantity('sevenUp')">+</button>
+    </div>
+</div>
+
+<!-- فانتا -->
+<div class="menu-item" id="fantaItem" data-item="فانتا" data-price="25">
+    <img src="img/fanta.jpg" alt="فانتا" />
+    <h3>فانتا<span class="primary-text"> -> 25 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fanta')">-</button>
+        <input type="text" id="fanta" value="0" readonly />
+        <button onclick="increaseQuantity('fanta')">+</button>
+    </div>
+</div>
+
+<!-- شويبس -->
+<div class="menu-item" id="schweppesItem" data-item="شويبس" data-price="35">
+    <img src="img/schweppes.jpg" alt="شويبس" />
+    <h3>شويبس<span class="primary-text"> -> 35 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('schweppes')">-</button>
+        <input type="text" id="schweppes" value="0" readonly />
+        <button onclick="increaseQuantity('schweppes')">+</button>
+    </div>
+</div>
+
+
+<!-- شاي ميكس أجدول -->
+<div class="menu-item" id="teaMixAjdalItem" data-item="ريدبول" data-price="60">
+    <img src="img/tea_mix_ajdal.jpg" alt="ريدبول" />
+    <h3> ريدبول <span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('teaMixAjdal')">-</button>
+        <input type="text" id="teaMixAjdal" value="0" readonly />
+        <button onclick="increaseQuantity('teaMixAjdal')">+</button>
+    </div>
+</div>
+
+<!-- أجدول فليفور -->
+<div class="menu-item" id="ajdalFlavorItem" data-item="فلاي ميكس ريدبول" data-price="90">
+    <img src="img/ajdal_flavor.jpg" alt="فلاي ميكس ريدبول" />
+    <h3>فلاي ميكس ريدبول<span class="primary-text"> -> 90 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('ajdalFlavor')">-</button>
+        <input type="text" id="ajdalFlavor" value="0" readonly />
+        <button onclick="increaseQuantity('ajdalFlavor')">+</button>
+    </div>
+</div>
+
+<!-- ديوشي، كيفي، كرايزي توت أزرق، فواكه -->
+<div class="menu-item" id="fruitCrazyItem" data-item="ديوشي، كيفي، كرايزي توت أزرق، فواكه" data-price="80">
+    <img src="img/fruit_crazy.jpg" alt="ديوشي، كيفي، كرايزي توت أزرق، فواكه" />
+    <h3>ريدبول فليفر " يوسفي , كيوي , كريزي توت ازرق , فراولة "<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fruitCrazy')">-</button>
+        <input type="text" id="fruitCrazy" value="0" readonly />
+        <button onclick="increaseQuantity('fruitCrazy')">+</button>
+    </div>
+</div>
+
+        </div>
+        
+    </div>
+    
+    <div class="title" id="food">
+        <h2>قائمة الطعام  :</h2>
+        <div class="menu-items">
+            <h2 class="title">DESSERTS</h2>
+        <!-- شوكلت كيك -->
+<div class="menu-item" id="chocolateCakeItem" data-item="شوكلت كيك" data-price="70">
+    <img src="img/chocolate_cake.jpg" alt="شوكلت كيك" />
+    <h3>شوكلت كيك<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chocolateCake')">-</button>
+        <input type="text" id="chocolateCake" value="0" readonly />
+        <button onclick="increaseQuantity('chocolateCake')">+</button>
+    </div>
+</div>
+
+<!-- مولتن كيك -->
+<div class="menu-item" id="moltenCakeItem" data-item="مولتن كيك" data-price="75">
+    <img src="img/molten_cake.jpg" alt="مولتن كيك" />
+    <h3>مولتن كيك<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('moltenCake')">-</button>
+        <input type="text" id="moltenCake" value="0" readonly />
+        <button onclick="increaseQuantity('moltenCake')">+</button>
+    </div>
+</div>
+
+<!-- تشيز كيك -->
+<div class="menu-item" id="cheesecakeItem" data-item="تشيز كيك" data-price="75">
+    <img src="img/cheesecake.jpg" alt="تشيز كيك" />
+    <h3>تشيز كيك<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cheesecake')">-</button>
+        <input type="text" id="cheesecake" value="0" readonly />
+        <button onclick="increaseQuantity('cheesecake')">+</button>
+    </div>
+</div>
+
+<!-- مولتن كيك باريستا -->
+<div class="menu-item" id="moltenBaristaCakeItem" data-item="مولتن كيك باريستا" data-price="80">
+    <img src="img/molten_barista_cake.jpg" alt="مولتن كيك باريستا" />
+    <h3>مولتن كيك باريستا " >فليفر + بولة ايس كريم"<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('moltenBaristaCake')">-</button>
+        <input type="text" id="moltenBaristaCake" value="0" readonly />
+        <button onclick="increaseQuantity('moltenBaristaCake')">+</button>
+    </div>
+</div>
+
+<!-- فروت سالاد -->
+<div class="menu-item" id="fruitSaladItem" data-item="فروت سالاد" data-price="60">
+    <img src="img/fruit_salad.jpg" alt="فروت سالاد" />
+    <h3>فروت سالاد<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fruitSalad')">-</button>
+        <input type="text" id="fruitSalad" value="0" readonly />
+        <button onclick="increaseQuantity('fruitSalad')">+</button>
+    </div>
+</div>
+
+<!-- فروت سالاد باريستا -->
+<div class="menu-item" id="fruitSaladBaristaItem" data-item="فروت سالاد باريستا" data-price="70">
+    <img src="img/fruit_salad_barista.jpg" alt="فروت سالاد باريستا" />
+    <h3>فروت سالاد باريستا<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fruitSaladBarista')">-</button>
+        <input type="text" id="fruitSaladBarista" value="0" readonly />
+        <button onclick="increaseQuantity('fruitSaladBarista')">+</button>
+    </div>
+</div>
+
+<!-- أم علي -->
+<div class="menu-item" id="omAliItem" data-item="أم علي" data-price="60">
+    <img src="img/om_ali.jpg" alt="أم علي" />
+    <h3>أم علي<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('omAli')">-</button>
+        <input type="text" id="omAli" value="0" readonly />
+        <button onclick="increaseQuantity('omAli')">+</button>
+    </div>
+</div>
+
+<!-- كاب كيك -->
+<div class="menu-item" id="cupcakeItem" data-item="كاب كيك" data-price="60">
+    <img src="img/cupcake.jpg" alt="كاب كيك" />
+    <h3>كاب كيك<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cupcake')">-</button>
+        <input type="text" id="cupcake" value="0" readonly />
+        <button onclick="increaseQuantity('cupcake')">+</button>
+    </div>
+</div>
+
+<!-- كاب كيك باريستا -->
+<div class="menu-item" id="cupcakeBaristaItem" data-item="كاب كيك باريستا" data-price="70">
+    <img src="img/cupcake_barista.jpg" alt="كاب كيك باريستا" />
+    <h3>كاب كيك باريستا<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cupcakeBarista')">-</button>
+        <input type="text" id="cupcakeBarista" value="0" readonly />
+        <button onclick="increaseQuantity('cupcakeBarista')">+</button>
+    </div>
+</div>
+
+<!-- طاجن اوريو -->
+<div class="menu-item" id="oreoTagineItem" data-item="طاجن اوريو" data-price="70">
+    <img src="img/oreo_tagine.jpg" alt="طاجن اوريو" />
+    <h3>طاجن اوريو<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('oreoTagine')">-</button>
+        <input type="text" id="oreoTagine" value="0" readonly />
+        <button onclick="increaseQuantity('oreoTagine')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">WAFFLES</h2>
+        <!-- نوتيلا -->
+<div class="menu-item" id="nutellaWaffleItem" data-item="نوتيلا" data-price="70">
+    <img src="img/nutella_waffle.jpg" alt="نوتيلا" />
+    <h3>نوتيلا<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('nutellaWaffle')">-</button>
+        <input type="text" id="nutellaWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('nutellaWaffle')">+</button>
+    </div>
+</div>
+
+<!-- كراميل -->
+<div class="menu-item" id="caramelWaffleItem" data-item="كراميل" data-price="70">
+    <img src="img/caramel_waffle.jpg" alt="كراميل" />
+    <h3>كراميل<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('caramelWaffle')">-</button>
+        <input type="text" id="caramelWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('caramelWaffle')">+</button>
+    </div>
+</div>
+
+<!-- شوكليت -->
+<div class="menu-item" id="chocolateWaffleItem" data-item="شوكليت" data-price="70">
+    <img src="img/chocolate_waffle.jpg" alt="شوكليت" />
+    <h3>شوكليت<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chocolateWaffle')">-</button>
+        <input type="text" id="chocolateWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('chocolateWaffle')">+</button>
+    </div>
+</div>
+
+<!-- اوريو -->
+<div class="menu-item" id="oreoWaffleItem" data-item="اوريو" data-price="70">
+    <img src="img/oreo_waffle.jpg" alt="اوريو" />
+    <h3>اوريو<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('oreoWaffle')">-</button>
+        <input type="text" id="oreoWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('oreoWaffle')">+</button>
+    </div>
+</div>
+
+<!-- لوتس -->
+<div class="menu-item" id="lotusWaffleItem" data-item="لوتس" data-price="95">
+    <img src="img/lotus_waffle.jpg" alt="لوتس" />
+    <h3>لوتس<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('lotusWaffle')">-</button>
+        <input type="text" id="lotusWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('lotusWaffle')">+</button>
+    </div>
+</div>
+
+<!-- فسدق -->
+<div class="menu-item" id="pistachioWaffleItem" data-item="فسدق" data-price="95">
+    <img src="img/pistachio_waffle.jpg" alt="فسدق" />
+    <h3>فسدق<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pistachioWaffle')">-</button>
+        <input type="text" id="pistachioWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('pistachioWaffle')">+</button>
+    </div>
+</div>
+
+<!-- وايت شوكليت -->
+<div class="menu-item" id="whiteChocolateWaffleItem" data-item="وايت شوكليت" data-price="70">
+    <img src="img/white_chocolate_waffle.jpg" alt="وايت شوكليت" />
+    <h3>وايت شوكليت<span class="primary-text"> -> 70 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('whiteChocolateWaffle')">-</button>
+        <input type="text" id="whiteChocolateWaffle" value="0" readonly />
+        <button onclick="increaseQuantity('whiteChocolateWaffle')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">MEALS</h2>
+        <!-- كوردن بلو -->
+<div class="menu-item" id="cordonBlueItem" data-item="كوردن بلو" data-price="190">
+    <img src="img/cordon_blue.jpg" alt="كوردن بلو" />
+    <h3>كوردن بلو<span class="primary-text"> -> 190 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cordonBlue')">-</button>
+        <input type="text" id="cordonBlue" value="0" readonly />
+        <button onclick="increaseQuantity('cordonBlue')">+</button>
+    </div>
+</div>
+
+<!-- كفتة لحم -->
+<div class="menu-item" id="koftaItem" data-item="كفتة لحم" data-price="200">
+    <img src="img/kofta.jpg" alt="كفتة لحم" />
+    <h3>كفتة لحم<span class="primary-text"> -> 200 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('kofta')">-</button>
+        <input type="text" id="kofta" value="0" readonly />
+        <button onclick="increaseQuantity('kofta')">+</button>
+    </div>
+</div>
+
+<!-- بانيه -->
+<div class="menu-item" id="paneItem" data-item="بانيه" data-price="165">
+    <img src="img/pane.jpg" alt="بانيه" />
+    <h3>بانيه<span class="primary-text"> -> 165 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pane')">-</button>
+        <input type="text" id="pane" value="0" readonly />
+        <button onclick="increaseQuantity('pane')">+</button>
+    </div>
+</div>
+
+<!-- استريس -->
+<div class="menu-item" id="stresItem" data-item="استريس" data-price="170">
+    <img src="img/stres.jpg" alt="استريس" />
+    <h3>استريس<span class="primary-text"> -> 170 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('stres')">-</button>
+        <input type="text" id="stres" value="0" readonly />
+        <button onclick="increaseQuantity('stres')">+</button>
+    </div>
+</div>
+
+<!-- تشيكن جريل -->
+<div class="menu-item" id="chickenGrillItem" data-item="تشيكن جريل" data-price="190">
+    <img src="img/chicken_grill.jpg" alt="تشيكن جريل" />
+    <h3>تشيكن جريل<span class="primary-text"> -> 190 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenGrill')">-</button>
+        <input type="text" id="chickenGrill" value="0" readonly />
+        <button onclick="increaseQuantity('chickenGrill')">+</button>
+    </div>
+</div>
+
+<!-- شيش طاووق -->
+<div class="menu-item" id="shishTawookItem" data-item="شيش طاووق" data-price="190">
+    <img src="img/shish_tawook.jpg" alt="شيش طاووق" />
+    <h3>شيش طاووق<span class="primary-text"> -> 190 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shishTawook')">-</button>
+        <input type="text" id="shishTawook" value="0" readonly />
+        <button onclick="increaseQuantity('shishTawook')">+</button>
+    </div>
+</div>
+
+<!-- ميكس جريل -->
+<div class="menu-item" id="mixGrillItem" data-item="ميكس جريل" data-price="220">
+    <img src="img/mix_grill.jpg" alt="ميكس جريل" />
+    <h3>ميكس جريل (فيليه - شيش - كفته)<span class="primary-text"> -> 220 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('mixGrill')">-</button>
+        <input type="text" id="mixGrill" value="0" readonly />
+        <button onclick="increaseQuantity('mixGrill')">+</button>
+    </div>
+</div>
+<h3>
+    كل وجبة يأتي معها :
+    
+    مكرونة وايت + بطاطس + عيش سوري + نمخلل + كاتشب
+    </h3>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">MEALS</h2>
+        <!-- بنا ارابيتا -->
+<div class="menu-item" id="banaArabitaItem" data-item="بنا ارابيتا" data-price="50">
+    <img src="img/bana_arabita.jpg" alt="بنا ارابيتا" />
+    <h3>بنا ارابيتا<span class="primary-text"> -> 50 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banaArabita')">-</button>
+        <input type="text" id="banaArabita" value="0" readonly />
+        <button onclick="increaseQuantity('banaArabita')">+</button>
+    </div>
+</div>
+
+<!-- بنا الفريدو -->
+<div class="menu-item" id="banaAlfredoItem" data-item="بنا الفريدو" data-price="75">
+    <img src="img/bana_alfredo.jpg" alt="بنا الفريدو" />
+    <h3>بنا الفريدو<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banaAlfredo')">-</button>
+        <input type="text" id="banaAlfredo" value="0" readonly />
+        <button onclick="increaseQuantity('banaAlfredo')">+</button>
+    </div>
+</div>
+
+<!-- نجر سكو -->
+<div class="menu-item" id="najerSkoItem" data-item="نجر سكو" data-price="85">
+    <img src="img/najer_sko.jpg" alt="نجر سكو" />
+    <h3>نجر سكو<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('najerSko')">-</button>
+        <input type="text" id="najerSko" value="0" readonly />
+        <button onclick="increaseQuantity('najerSko')">+</button>
+    </div>
+</div>
+
+<!-- بنا جمبري -->
+<div class="menu-item" id="banaShrimpItem" data-item="بنا جمبري" data-price="110">
+    <img src="img/bana_shrimp.jpg" alt="بنا جمبري" />
+    <h3>بنا جمبري<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banaShrimp')">-</button>
+        <input type="text" id="banaShrimp" value="0" readonly />
+        <button onclick="increaseQuantity('banaShrimp')">+</button>
+    </div>
+</div>
+
+<!-- بنا سجق -->
+<div class="menu-item" id="banaSausageItem" data-item="بنا سجق" data-price="80">
+    <img src="img/bana_sausage.jpg" alt="بنا سجق" />
+    <h3>بنا سجق<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banaSausage')">-</button>
+        <input type="text" id="banaSausage" value="0" readonly />
+        <button onclick="increaseQuantity('banaSausage')">+</button>
+    </div>
+</div>
+
+<!-- بنا هوت دوج -->
+<div class="menu-item" id="banaHotDogItem" data-item="بنا هوت دوج" data-price="80">
+    <img src="img/bana_hot_dog.jpg" alt="بنا هوت دوج" />
+    <h3>بنا هوت دوج<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banaHotDog')">-</button>
+        <input type="text" id="banaHotDog" value="0" readonly />
+        <button onclick="increaseQuantity('banaHotDog')">+</button>
+    </div>
+</div>
+
+<!-- اسباجيتي تشيكن -->
+<div class="menu-item" id="spaghettiChickenItem" data-item="اسباجيتي تشيكن" data-price="80">
+    <img src="img/spaghetti_chicken.jpg" alt="اسباجيتي تشيكن" />
+    <h3>اسباجيتي تشيكن<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('spaghettiChicken')">-</button>
+        <input type="text" id="spaghettiChicken" value="0" readonly />
+        <button onclick="increaseQuantity('spaghettiChicken')">+</button>
+    </div>
+</div>
+
+<!-- اسباجتي بلو نيز -->
+<div class="menu-item" id="spaghettiBlueNizItem" data-item="اسباجتي بلو نيز" data-price="80">
+    <img src="img/spaghetti_blue_niz.jpg" alt="اسباجتي بلو نيز" />
+    <h3>اسباجتي بلو نيز<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('spaghettiBlueNiz')">-</button>
+        <input type="text" id="spaghettiBlueNiz" value="0" readonly />
+        <button onclick="increaseQuantity('spaghettiBlueNiz')">+</button>
+    </div>
+</div>
+
+<!-- طاجن مكرونة بشاميل -->
+<div class="menu-item" id="pastaBechamelItem" data-item="طاجن مكرونة بشاميل" data-price="85">
+    <img src="img/pasta_bechamel.jpg" alt="طاجن مكرونة بشاميل" />
+    <h3>طاجن مكرونة بشاميل<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pastaBechamel')">-</button>
+        <input type="text" id="pastaBechamel" value="0" readonly />
+        <button onclick="increaseQuantity('pastaBechamel')">+</button>
+    </div>
+</div>
+
+<!-- طاجن مكرونة فرن ( ريد صوص ) -->
+<div class="menu-item" id="pastaRedSauceItem" data-item="طاجن مكرونة فرن ( ريد صوص )" data-price="85">
+    <img src="img/pasta_red_sauce.jpg" alt="طاجن مكرونة فرن ( ريد صوص )" />
+    <h3>طاجن مكرونة فرن ( ريد صوص )<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('pastaRedSauce')">-</button>
+        <input type="text" id="pastaRedSauce" value="0" readonly />
+        <button onclick="increaseQuantity('pastaRedSauce')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">CREPE</h2>
+            <!-- بانيه -->
+<div class="menu-item" id="banyaItem" data-item="بانيه" data-price="85">
+    <img src="img/banya.jpg" alt="بانيه" />
+    <h3>بانيه<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banya')">-</button>
+        <input type="text" id="banya" value="0" readonly />
+        <button onclick="increaseQuantity('banya')">+</button>
+    </div>
+</div>
+
+<!-- استريس -->
+<div class="menu-item" id="estresItem" data-item="استريس" data-price="90">
+    <img src="img/estres.jpg" alt="استريس" />
+    <h3>استريس<span class="primary-text"> -> 90 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('estres')">-</button>
+        <input type="text" id="estres" value="0" readonly />
+        <button onclick="increaseQuantity('estres')">+</button>
+    </div>
+</div>
+
+<!-- أنجر -->
+<div class="menu-item" id="angerItem" data-item="أنجر" data-price="90">
+    <img src="img/anger.jpg" alt="أنجر" />
+    <h3>أنجر<span class="primary-text"> -> 90 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('anger')">-</button>
+        <input type="text" id="anger" value="0" readonly />
+        <button onclick="increaseQuantity('anger')">+</button>
+    </div>
+</div>
+
+<!-- شيش -->
+<div class="menu-item" id="shishItem" data-item="شيش" data-price="95">
+    <img src="img/shish.jpg" alt="شيش" />
+    <h3>شيش<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shish')">-</button>
+        <input type="text" id="shish" value="0" readonly />
+        <button onclick="increaseQuantity('shish')">+</button>
+    </div>
+</div>
+
+<!-- فاهيتا -->
+<div class="menu-item" id="fajitaItem" data-item="فاهيتا" data-price="100">
+    <img src="img/fajita.jpg" alt="فاهيتا" />
+    <h3>فاهيتا<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fajita')">-</button>
+        <input type="text" id="fajita" value="0" readonly />
+        <button onclick="increaseQuantity('fajita')">+</button>
+    </div>
+</div>
+
+<!-- برجر -->
+<div class="menu-item" id="burgerItem" data-item="برجر" data-price="100">
+    <img src="img/burger.jpg" alt="برجر" />
+    <h3>برجر<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('burger')">-</button>
+        <input type="text" id="burger" value="0" readonly />
+        <button onclick="increaseQuantity('burger')">+</button>
+    </div>
+</div>
+
+<!-- كفتة -->
+<div class="menu-item" id="koftaItem" data-item="كفتة" data-price="80">
+    <img src="img/kofta.jpg" alt="كفتة" />
+    <h3>كفتة<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('kofta')">-</button>
+        <input type="text" id="kofta" value="0" readonly />
+        <button onclick="increaseQuantity('kofta')">+</button>
+    </div>
+</div>
+
+<!-- سوسيس -->
+<div class="menu-item" id="sausageItem" data-item="سوسيس" data-price="80">
+    <img src="img/sausage.jpg" alt="سوسيس" />
+    <h3>سوسيس<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausage')">-</button>
+        <input type="text" id="sausage" value="0" readonly />
+        <button onclick="increaseQuantity('sausage')">+</button>
+    </div>
+</div>
+
+<!-- سجق -->
+<div class="menu-item" id="sogokItem" data-item="سجق" data-price="80">
+    <img src="img/sogok.jpg" alt="سجق" />
+    <h3>سجق<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sogok')">-</button>
+        <input type="text" id="sogok" value="0" readonly />
+        <button onclick="increaseQuantity('sogok')">+</button>
+    </div>
+</div>
+
+<!-- بطاطس -->
+<div class="menu-item" id="potatoItem" data-item="بطاطس" data-price="50">
+    <img src="img/potato.jpg" alt="بطاطس" />
+    <h3>بطاطس<span class="primary-text"> -> 50 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('potato')">-</button>
+        <input type="text" id="potato" value="0" readonly />
+        <button onclick="increaseQuantity('potato')">+</button>
+    </div>
+</div>
+
+<!-- ميكس جبن -->
+<div class="menu-item" id="cheeseMixItem" data-item="ميكس جبن" data-price="75">
+    <img src="img/cheese_mix.jpg" alt="ميكس جبن" />
+    <h3>ميكس جبن<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cheeseMix')">-</button>
+        <input type="text" id="cheeseMix" value="0" readonly />
+        <button onclick="increaseQuantity('cheeseMix')">+</button>
+    </div>
+</div>
+
+<!-- ميكس فراخ -->
+<div class="menu-item" id="chickenMixItem" data-item="ميكس فراخ" data-price="105">
+    <img src="img/chicken_mix.jpg" alt="ميكس فراخ" />
+    <h3>ميكس فراخ<span class="primary-text"> -> 105 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenMix')">-</button>
+        <input type="text" id="chickenMix" value="0" readonly />
+        <button onclick="increaseQuantity('chickenMix')">+</button>
+    </div>
+</div>
+
+<!-- ميكس لحمة -->
+<div class="menu-item" id="meatMixItem" data-item="ميكس لحمة" data-price="110">
+    <img src="img/meat_mix.jpg" alt="ميكس لحمة" />
+    <h3>ميكس لحمة<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('meatMix')">-</button>
+        <input type="text" id="meatMix" value="0" readonly />
+        <button onclick="increaseQuantity('meatMix')">+</button>
+    </div>
+</div>
+
+<!-- ميكس باريستا -->
+<div class="menu-item" id="baristaMixItem" data-item="ميكس باريستا" data-price="115">
+    <img src="img/barista_mix.jpg" alt="ميكس باريستا" />
+    <h3>ميكس باريستا<span class="primary-text"> -> 115 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('baristaMix')">-</button>
+        <input type="text" id="baristaMix" value="0" readonly />
+        <button onclick="increaseQuantity('baristaMix')">+</button>
+    </div>
+</div>
+
+<!-- جمبري -->
+<div class="menu-item" id="shrimpItem" data-item="جمبري" data-price="125">
+    <img src="img/shrimp.jpg" alt="جمبري" />
+    <h3>جمبري<span class="primary-text"> -> 125 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shrimp')">-</button>
+        <input type="text" id="shrimp" value="0" readonly />
+        <button onclick="increaseQuantity('shrimp')">+</button>
+    </div>
+</div>
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SWEETY CREPE</h2>
+        <!-- نوتيللا -->
+<div class="menu-item" id="nutellaItem" data-item="نوتيللا" data-price="50">
+    <img src="img/nutella.jpg" alt="نوتيللا" />
+    <h3>نوتيللا<span class="primary-text"> -> 50 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('nutella')">-</button>
+        <input type="text" id="nutella" value="0" readonly />
+        <button onclick="increaseQuantity('nutella')">+</button>
+    </div>
+</div>
+
+<!-- نوتيللا موز -->
+<div class="menu-item" id="nutellaBananaItem" data-item="نوتيللا موز" data-price="55">
+    <img src="img/nutella_banana.jpg" alt="نوتيللا موز" />
+    <h3>نوتيللا موز<span class="primary-text"> -> 55 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('nutellaBanana')">-</button>
+        <input type="text" id="nutellaBanana" value="0" readonly />
+        <button onclick="increaseQuantity('nutellaBanana')">+</button>
+    </div>
+</div>
+
+<!-- موز تفاح -->
+<div class="menu-item" id="bananaAppleItem" data-item="موز تفاح" data-price="60">
+    <img src="img/banana_apple.jpg" alt="موز تفاح" />
+    <h3>موز تفاح<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('bananaApple')">-</button>
+        <input type="text" id="bananaApple" value="0" readonly />
+        <button onclick="increaseQuantity('bananaApple')">+</button>
+    </div>
+</div>
+
+<!-- مكسرات -->
+<div class="menu-item" id="nutsItem" data-item="مكسرات" data-price="60">
+    <img src="img/nuts.jpg" alt="مكسرات" />
+    <h3>مكسرات<span class="primary-text"> -> 60 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('nuts')">-</button>
+        <input type="text" id="nuts" value="0" readonly />
+        <button onclick="increaseQuantity('nuts')">+</button>
+    </div>
+</div>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SANDWICHES</h2>
+        <!-- برجر بيف -->
+<div class="menu-item" id="beefBurgerItem" data-item="برجر بيف" data-price="90">
+    <img src="img/beef_burger.jpg" alt="برجر بيف" />
+    <h3>برجر بيف<span class="primary-text"> -> 90 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('beefBurger')">-</button>
+        <input type="text" id="beefBurger" value="0" readonly />
+        <button onclick="increaseQuantity('beefBurger')">+</button>
+    </div>
+</div>
+
+<!-- برجر بيض -->
+<div class="menu-item" id="eggBurgerItem" data-item="برجر بيض" data-price="95">
+    <img src="img/egg_burger.jpg" alt="برجر بيض" />
+    <h3>برجر بيض<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('eggBurger')">-</button>
+        <input type="text" id="eggBurger" value="0" readonly />
+        <button onclick="increaseQuantity('eggBurger')">+</button>
+    </div>
+</div>
+
+<!-- برجر جبنة -->
+<div class="menu-item" id="cheeseBurgerItem" data-item="برجر جبنة" data-price="95">
+    <img src="img/cheese_burger.jpg" alt="برجر جبنة" />
+    <h3>برجر جبنة<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cheeseBurger')">-</button>
+        <input type="text" id="cheeseBurger" value="0" readonly />
+        <button onclick="increaseQuantity('cheeseBurger')">+</button>
+    </div>
+    
+</div>
+<div class="menu-item" id="cheeseBurgerbvcItem" data-item="برجر بيض + جبنة" data-price="110">
+    <img src="img/cheese_burger.jpg" alt="برجر جبنة" />
+    <h3>برجر بيض + جبنة<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('cheeseBurgerbvc')">-</button>
+        <input type="text" id="cheeseBurger" value="0" readonly />
+        <button onclick="increaseQuantity('cheeseBurgerbvs')">+</button>
+    </div>
+</div>
+<!-- برجر دبل قطع -->
+<div class="menu-item" id="doubleBeefBurgerItem" data-item="برجر دبل قطع" data-price="150">
+    <img src="img/double_beef_burger.jpg" alt="برجر دبل قطع" />
+    <h3>برجر دبل قطع<span class="primary-text"> -> 150 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('doubleBeefBurger')">-</button>
+        <input type="text" id="doubleBeefBurger" value="0" readonly />
+        <button onclick="increaseQuantity('doubleBeefBurger')">+</button>
+    </div>
+</div>
+
+<!-- استريس -->
+<div class="menu-item" id="stressItem" data-item="استريس" data-price="80">
+    <img src="img/stress.jpg" alt="استريس" />
+    <h3>استريس<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('stress')">-</button>
+        <input type="text" id="stress" value="0" readonly />
+        <button onclick="increaseQuantity('stress')">+</button>
+    </div>
+</div>
+
+<!-- أنجر -->
+<div class="menu-item" id="angersItem" data-item="أنجر" data-price="80">
+    <img src="img/angers.jpg" alt="أنجر" />
+    <h3>أنجر<span class="primary-text"> -> 80 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('angers')">-</button>
+        <input type="text" id="angers" value="0" readonly />
+        <button onclick="increaseQuantity('angers')">+</button>
+    </div>
+</div>
+
+<!-- بانيه -->
+<div class="menu-item" id="banyaItem" data-item="بانيه" data-price="80">
+    <img src="img/banya.jpg" alt="بانيه" />
+    <h3>بانيه<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('banya')">-</button>
+        <input type="text" id="banya" value="0" readonly />
+        <button onclick="increaseQuantity('banya')">+</button>
+    </div>
+</div>
+
+<!-- كفتة -->
+<div class="menu-item" id="koftaItem" data-item="كفتة" data-price="85">
+    <img src="img/kofta.jpg" alt="كفتة" />
+    <h3>كفتة<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('kofta')">-</button>
+        <input type="text" id="kofta" value="0" readonly />
+        <button onclick="increaseQuantity('kofta')">+</button>
+    </div>
+</div>
+
+<!-- فاهيتا فراخ -->
+<div class="menu-item" id="chickenFajitaItem" data-item="فاهيتا فراخ" data-price="85">
+    <img src="img/chicken_fajita.jpg" alt="فاهيتا فراخ" />
+    <h3>فاهيتا فراخ<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenFajita')">-</button>
+        <input type="text" id="chickenFajita" value="0" readonly />
+        <button onclick="increaseQuantity('chickenFajita')">+</button>
+    </div>
+</div>
+
+<!-- سجق -->
+<div class="menu-item" id="sausageDishItem" data-item="سجق" data-price="75">
+    <img src="img/sausage.jpg" alt="سجق" />
+    <h3>سجق<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausageDish')">-</button>
+        <input type="text" id="sausageDish" value="0" readonly />
+        <button onclick="increaseQuantity('sausageDish')">+</button>
+    </div>
+</div>
+
+<!-- سوسيس -->
+<div class="menu-item" id="sosisItem" data-item="سوسيس" data-price="75">
+    <img src="img/sosis.jpg" alt="سوسيس" />
+    <h3>سوسيس<span class="primary-text"> -> 75 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sosis')">-</button>
+        <input type="text" id="sosis" value="0" readonly />
+        <button onclick="increaseQuantity('sosis')">+</button>
+    </div>
+</div>
+
+<!-- بطاطس -->
+<div class="menu-item" id="potatoItem" data-item="بطاطس" data-price="40">
+    <img src="img/potato.jpg" alt="بطاطس" />
+    <h3>بطاطس<span class="primary-text"> -> 40 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('potato')">-</button>
+        <input type="text" id="potato" value="0" readonly />
+        <button onclick="increaseQuantity('potato')">+</button>
+    </div>
+</div>
+
+<!-- دريل جمبري جري -->
+<div class="menu-item" id="shrimpGrillItem" data-item="دريل جمبري جري" data-price="100">
+    <img src="img/shrimp_grill.jpg" alt="دريل جمبري جري" />
+    <h3>دريل جمبري جري<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shrimpGrill')">-</button>
+        <input type="text" id="shrimpGrill" value="0" readonly />
+        <button onclick="increaseQuantity('shrimpGrill')">+</button>
+    </div>
+</div>
+
+<!-- برجر فراخ -->
+<div class="menu-item" id="chickenBurgerItem" data-item="برجر فراخ" data-price="85">
+    <img src="img/chicken_burger.jpg" alt="برجر فراخ" />
+    <h3>برجر فراخ<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenBurger')">-</button>
+        <input type="text" id="chickenBurger" value="0" readonly />
+        <button onclick="increaseQuantity('chickenBurger')">+</button>
+    </div>
+</div>
+
+<!-- فلاي تشيكن برجر -->
+<div class="menu-item" id="flyChickenBurgerItem" data-item="فلاي تشيكن برجر" data-price="100">
+    <img src="img/fly_chicken_burger.jpg" alt="فلاي تشيكن برجر" />
+    <h3>فلاي تشيكن برجر<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('flyChickenBurger')">-</button>
+        <input type="text" id="flyChickenBurger" value="0" readonly />
+        <button onclick="increaseQuantity('flyChickenBurger')">+</button>
+    </div>
+</div>
+
+<!-- شيش -->
+<div class="menu-item" id="shishItem" data-item="شيش" data-price="85">
+    <img src="img/shish.jpg" alt="شيش" />
+    <h3>شيش<span class="primary-text"> -> 85 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shish')">-</button>
+        <input type="text" id="shish" value="0" readonly />
+        <button onclick="increaseQuantity('shish')">+</button>
+    </div>
+</div>
+<h3>كل ساندوتش يأتي معه بطاطس</h3>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SAROKH</h2>
+
+<!-- صاروخ سجق -->
+<div class="menu-item" id="rocketSausageItem" data-item="صاروخ سجق" data-price="95">
+    <img src="img/rocket_sausage.jpg" alt="صاروخ سجق" />
+    <h3>صاروخ سجق<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketSausage')">-</button>
+        <input type="text" id="rocketSausage" value="0" readonly />
+        <button onclick="increaseQuantity('rocketSausage')">+</button>
+    </div>
+</div>
+
+<!-- صاروخ سوسيس -->
+<div class="menu-item" id="rocketSosisItem" data-item="صاروخ سوسيس" data-price="95">
+    <img src="img/rocket_sosis.jpg" alt="صاروخ سوسيس" />
+    <h3>صاروخ سوسيس<span class="primary-text"> -> 95 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketSosis')">-</button>
+        <input type="text" id="rocketSosis" value="0" readonly />
+        <button onclick="increaseQuantity('rocketSosis')">+</button>
+    </div>
+</div>
+
+<!-- صاروخ شيش -->
+<div class="menu-item" id="rocketShishItem" data-item="صاروخ شيش" data-price="100">
+    <img src="img/rocket_shish.jpg" alt="صاروخ شيش" />
+    <h3>صاروخ شيش<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketShish')">-</button>
+        <input type="text" id="rocketShish" value="0" readonly />
+        <button onclick="increaseQuantity('rocketShish')">+</button>
+    </div>
+</div>
+
+<!-- صاروخ فاهيتا -->
+<div class="menu-item" id="rocketFajitaItem" data-item="صاروخ فاهيتا" data-price="100">
+    <img src="img/rocket_fajita.jpg" alt="صاروخ فاهيتا" />
+    <h3>صاروخ فاهيتا<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketFajita')">-</button>
+        <input type="text" id="rocketFajita" value="0" readonly />
+        <button onclick="increaseQuantity('rocketFajita')">+</button>
+    </div>
+</div>
+
+<!-- صاروخ كفتة -->
+<div class="menu-item" id="rocketKoftaItem" data-item="صاروخ كفتة" data-price="110">
+    <img src="img/rocket_kofta.jpg" alt="صاروخ كفتة" />
+    <h3>صاروخ كفتة<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketKofta')">-</button>
+        <input type="text" id="rocketKofta" value="0" readonly />
+        <button onclick="increaseQuantity('rocketKofta')">+</button>
+    </div>
+</div>
+
+<!-- صاروخ جمبري -->
+<div class="menu-item" id="rocketShrimpItem" data-item="صاروخ جمبري" data-price="125">
+    <img src="img/rocket_shrimp.jpg" alt="صاروخ جمبري" />
+    <h3>صاروخ جمبري<span class="primary-text"> -> 125 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('rocketShrimp')">-</button>
+        <input type="text" id="rocketShrimp" value="0" readonly />
+        <button onclick="increaseQuantity('rocketShrimp')">+</button>
+    </div>
+</div>
+
+
+
+
+
+        </div>
+        <div class="menu-items">
+            <h2 class="title">SALAD</h2>
+            <!-- ميكس سلاد -->
+<div class="menu-item" id="mixedSaladItem" data-item="ميكس سلاد" data-price="25">
+    <img src="img/mixed_salad.jpg" alt="ميكس سلاد" />
+    <h3>ميكس سلاد<span class="primary-text"> -> 25 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('mixedSalad')">-</button>
+        <input type="text" id="mixedSalad" value="0" readonly />
+        <button onclick="increaseQuantity('mixedSalad')">+</button>
+    </div>
+</div>
+
+<!-- سيزر سلاد -->
+<div class="menu-item" id="caesarSaladItem" data-item="سيزر سلاد" data-price="50">
+    <img src="img/caesar_salad.jpg" alt="سيزر سلاد" />
+    <h3>سيزر سلاد<span class="primary-text"> -> 50 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('caesarSalad')">-</button>
+        <input type="text" id="caesarSalad" value="0" readonly />
+        <button onclick="increaseQuantity('caesarSalad')">+</button>
+    </div>
+</div>
+
+<!-- يوناني سلاد -->
+<div class="menu-item" id="greekSaladItem" data-item="يوناني سلاد" data-price="40">
+    <img src="img/greek_salad.jpg" alt="يوناني سلاد" />
+    <h3>يوناني سلاد<span class="primary-text"> -> 40 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('greekSalad')">-</button>
+        <input type="text" id="greekSalad" value="0" readonly />
+        <button onclick="increaseQuantity('greekSalad')">+</button>
+    </div>
+</div>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">ADDITIONS</h2>
+            <!-- ثومية -->
+<div class="menu-item" id="garlicDipItem" data-item="ثومية" data-price="10">
+    <img src="img/garlic_dip.jpg" alt="ثومية" />
+    <h3>ثومية<span class="primary-text"> -> 10 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('garlicDip')">-</button>
+        <input type="text" id="garlicDip" value="0" readonly />
+        <button onclick="increaseQuantity('garlicDip')">+</button>
+    </div>
+</div>
+
+<!-- طحينة -->
+<div class="menu-item" id="tahiniItem" data-item="طحينة" data-price="10">
+    <img src="img/tahini.jpg" alt="طحينة" />
+    <h3>طحينة<span class="primary-text"> -> 10 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('tahini')">-</button>
+        <input type="text" id="tahini" value="0" readonly />
+        <button onclick="increaseQuantity('tahini')">+</button>
+    </div>
+</div>
+
+<!-- باكت بطاطس -->
+<div class="menu-item" id="potatoPackItem" data-item="باكت بطاطس" data-price="30">
+    <img src="img/potato_pack.jpg" alt="باكت بطاطس" />
+    <h3>باكت بطاطس<span class="primary-text"> -> 30 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('potatoPack')">-</button>
+        <input type="text" id="potatoPack" value="0" readonly />
+        <button onclick="increaseQuantity('potatoPack')">+</button>
+    </div>
+</div>
+        </div>
+        <div class="menu-items">
+            <h2 class="title">PIZZA</h2>
+            <h3 class="title">يمكن اضافة جبن - فراخ - لحوم - حشو اطراف</h3>
+            <!-- مارغريتا -->
+<div class="menu-item" id="margheritaLargeItem" data-item="مارغريتا كبير" data-price="110">
+    <img src="img/margherita.jpg" alt="مارغريتا" />
+    <h3>مارغريتا كبير<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('margheritaLarge')">-</button>
+        <input type="text" id="margheritaLarge" value="0" readonly />
+        <button onclick="increaseQuantity('margheritaLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="margheritaSmallItem" data-item="مارغريتا صغير" data-price="100">
+    <img src="img/margherita.jpg" alt="مارغريتا" />
+    <h3>مارغريتا صغير<span class="primary-text"> -> 100 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('margheritaSmall')">-</button>
+        <input type="text" id="margheritaSmall" value="0" readonly />
+        <button onclick="increaseQuantity('margheritaSmall')">+</button>
+    </div>
+</div>
+
+<!-- خضروات -->
+<div class="menu-item" id="vegetablesLargeItem" data-item="خضروات كبير" data-price="115">
+    <img src="img/vegetables.jpg" alt="خضروات" />
+    <h3>خضروات كبير<span class="primary-text"> -> 115 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('vegetablesLarge')">-</button>
+        <input type="text" id="vegetablesLarge" value="0" readonly />
+        <button onclick="increaseQuantity('vegetablesLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="vegetablesSmallItem" data-item="خضروات صغير" data-price="105">
+    <img src="img/vegetables.jpg" alt="خضروات" />
+    <h3>خضروات صغير<span class="primary-text"> -> 105 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('vegetablesSmall')">-</button>
+        <input type="text" id="vegetablesSmall" value="0" readonly />
+        <button onclick="increaseQuantity('vegetablesSmall')">+</button>
+    </div>
+</div>
+
+<!-- فوا تشيز -->
+<div class="menu-item" id="fourCheeseLargeItem" data-item="فوا تشيز كبير" data-price="120">
+    <img src="img/four_cheese.jpg" alt="فوا تشيز" />
+    <h3>فوا تشيز كبير<span class="primary-text"> -> 120 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fourCheeseLarge')">-</button>
+        <input type="text" id="fourCheeseLarge" value="0" readonly />
+        <button onclick="increaseQuantity('fourCheeseLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="fourCheeseSmallItem" data-item="فوا تشيز صغير" data-price="110">
+    <img src="img/four_cheese.jpg" alt="فوا تشيز" />
+    <h3>فوا تشيز صغير<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('fourCheeseSmall')">-</button>
+        <input type="text" id="fourCheeseSmall" value="0" readonly />
+        <button onclick="increaseQuantity('fourCheeseSmall')">+</button>
+    </div>
+</div>
+
+<!-- استربس -->
+<div class="menu-item" id="stripsLargeItem" data-item="استربس كبير" data-price="135">
+    <img src="img/strips.jpg" alt="استربس" />
+    <h3>استربس كبير<span class="primary-text"> -> 135 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('stripsLarge')">-</button>
+        <input type="text" id="stripsLarge" value="0" readonly />
+        <button onclick="increaseQuantity('stripsLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="stripsSmallItem" data-item="استربس صغير" data-price="120">
+    <img src="img/strips.jpg" alt="استربس" />
+    <h3>استربس صغير<span class="primary-text"> -> 120 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('stripsSmall')">-</button>
+        <input type="text" id="stripsSmall" value="0" readonly />
+        <button onclick="increaseQuantity('stripsSmall')">+</button>
+    </div>
+</div>
+
+<!-- باربكيو -->
+<div class="menu-item" id="barbecueLargeItem" data-item="باربكيو كبير" data-price="135">
+    <img src="img/barbecue.jpg" alt="باربكيو" />
+    <h3>باربكيو كبير<span class="primary-text"> -> 135 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('barbecueLarge')">-</button>
+        <input type="text" id="barbecueLarge" value="0" readonly />
+        <button onclick="increaseQuantity('barbecueLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="barbecueSmallItem" data-item="باربكيو صغير" data-price="120">
+    <img src="img/barbecue.jpg" alt="باربكيو" />
+    <h3>باربكيو صغير<span class="primary-text"> -> 120 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('barbecueSmall')">-</button>
+        <input type="text" id="barbecueSmall" value="0" readonly />
+        <button onclick="increaseQuantity('barbecueSmall')">+</button>
+    </div>
+</div>
+
+<!-- رانش -->
+<div class="menu-item" id="ranchLargeItem" data-item="رانش كبير" data-price="145">
+    <img src="img/ranch.jpg" alt="رانش" />
+    <h3>رانش كبير<span class="primary-text"> -> 145 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('ranchLarge')">-</button>
+        <input type="text" id="ranchLarge" value="0" readonly />
+        <button onclick="increaseQuantity('ranchLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="ranchSmallItem" data-item="رانش صغير" data-price="130">
+    <img src="img/ranch.jpg" alt="رانش" />
+    <h3>رانش صغير<span class="primary-text"> -> 130 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('ranchSmall')">-</button>
+        <input type="text" id="ranchSmall" value="0" readonly />
+        <button onclick="increaseQuantity('ranchSmall')">+</button>
+    </div>
+</div>
+
+<!-- سوسيس -->
+<div class="menu-item" id="sausageLargeItem" data-item="سوسيس كبير" data-price="120">
+    <img src="img/sausage.jpg" alt="سوسيس" />
+    <h3>سوسيس كبير<span class="primary-text"> -> 120 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausageLarge')">-</button>
+        <input type="text" id="sausageLarge" value="0" readonly />
+        <button onclick="increaseQuantity('sausageLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="sausageSmallItem" data-item="سوسيس صغير" data-price="110">
+    <img src="img/sausage.jpg" alt="سوسيس" />
+    <h3>سوسيس صغير<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausageSmall')">-</button>
+        <input type="text" id="sausageSmall" value="0" readonly />
+        <button onclick="increaseQuantity('sausageSmall')">+</button>
+    </div>
+</div>
+
+<!-- لحم مفروم -->
+<div class="menu-item" id="groundBeefLargeItem" data-item="لحم مفروم كبير" data-price="150">
+    <img src="img/ground_beef.jpg" alt="لحم مفروم" />
+    <h3>لحم مفروم كبير<span class="primary-text"> -> 150 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('groundBeefLarge')">-</button>
+        <input type="text" id="groundBeefLarge" value="0" readonly />
+        <button onclick="increaseQuantity('groundBeefLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="groundBeefSmallItem" data-item="لحم مفروم صغير" data-price="135">
+    <img src="img/ground_beef.jpg" alt="لحم مفروم" />
+    <h3>لحم مفروم صغير<span class="primary-text"> -> 135 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('groundBeefSmall')">-</button>
+        <input type="text" id="groundBeefSmall" value="0" readonly />
+        <button onclick="increaseQuantity('groundBeefSmall')">+</button>
+    </div>
+</div>
+
+<!-- سجق -->
+<div class="menu-item" id="sausageLargeItem" data-item="سجق كبير" data-price="120">
+    <img src="img/sausage.jpg" alt="سجق" />
+    <h3>سجق كبير<span class="primary-text"> -> 120 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausageLarge')">-</button>
+        <input type="text" id="sausageLarge" value="0" readonly />
+        <button onclick="increaseQuantity('sausageLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="sausageSmallItem" data-item="سجق صغير" data-price="110">
+    <img src="img/sausage.jpg" alt="سجق" />
+    <h3>سجق صغير<span class="primary-text"> -> 110 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('sausageSmall')">-</button>
+        <input type="text" id="sausageSmall" value="0" readonly />
+        <button onclick="increaseQuantity('sausageSmall')">+</button>
+    </div>
+</div>
+
+<!-- ميكس لحوم -->
+<div class="menu-item" id="meatMixLargeItem" data-item="ميكس لحوم كبير" data-price="160">
+    <img src="img/meat_mix.jpg" alt="ميكس لحوم" />
+    <h3>ميكس لحوم كبير<span class="primary-text"> -> 160 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('meatMixLarge')">-</button>
+        <input type="text" id="meatMixLarge" value="0" readonly />
+        <button onclick="increaseQuantity('meatMixLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="meatMixSmallItem" data-item="ميكس لحوم صغير" data-price="145">
+    <img src="img/meat_mix.jpg" alt="ميكس لحوم" />
+    <h3>ميكس لحوم صغير<span class="primary-text"> -> 145 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('meatMixSmall')">-</button>
+        <input type="text" id="meatMixSmall" value="0" readonly />
+        <button onclick="increaseQuantity('meatMixSmall')">+</button>
+    </div>
+</div>
+
+<!-- ميكس فراخ -->
+<div class="menu-item" id="chickenMixLargeItem" data-item="ميكس فراخ كبير" data-price="150">
+    <img src="img/chicken_mix.jpg" alt="ميكس فراخ" />
+    <h3>ميكس فراخ كبير<span class="primary-text"> -> 150 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenMixLarge')">-</button>
+        <input type="text" id="chickenMixLarge" value="0" readonly />
+        <button onclick="increaseQuantity('chickenMixLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="chickenMixSmallItem" data-item="ميكس فراخ صغير" data-price="140">
+    <img src="img/chicken_mix.jpg" alt="ميكس فراخ" />
+    <h3>ميكس فراخ صغير<span class="primary-text"> -> 140 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('chickenMixSmall')">-</button>
+        <input type="text" id="chickenMixSmall" value="0" readonly />
+        <button onclick="increaseQuantity('chickenMixSmall')">+</button>
+    </div>
+</div>
+
+<!-- تونة -->
+<div class="menu-item" id="tunaLargeItem" data-item="تونة كبير" data-price="140">
+    <img src="img/tuna.jpg" alt="تونة" />
+    <h3>تونة كبير<span class="primary-text"> -> 140 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('tunaLarge')">-</button>
+        <input type="text" id="tunaLarge" value="0" readonly />
+        <button onclick="increaseQuantity('tunaLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="tunaSmallItem" data-item="تونة صغير" data-price="125">
+    <img src="img/tuna.jpg" alt="تونة" />
+    <h3>تونة صغير<span class="primary-text"> -> 125 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('tunaSmall')">-</button>
+        <input type="text" id="tunaSmall" value="0" readonly />
+        <button onclick="increaseQuantity('tunaSmall')">+</button>
+    </div>
+</div>
+
+<!-- جمبري -->
+<div class="menu-item" id="shrimpLargeItem" data-item="جمبري كبير" data-price="165">
+    <img src="img/shrimp.jpg" alt="جمبري" />
+    <h3>جمبري كبير<span class="primary-text"> -> 165 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shrimpLarge')">-</button>
+        <input type="text" id="shrimpLarge" value="0" readonly />
+        <button onclick="increaseQuantity('shrimpLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="shrimpSmallItem" data-item="جمبري صغير" data-price="150">
+    <img src="img/shrimp.jpg" alt="جمبري" />
+    <h3>جمبري صغير<span class="primary-text"> -> 150 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('shrimpSmall')">-</button>
+        <input type="text" id="shrimpSmall" value="0" readonly />
+        <button onclick="increaseQuantity('shrimpSmall')">+</button>
+    </div>
+</div>
+
+<!-- سوبر سوبريم لحوم -->
+<div class="menu-item" id="superSupremeMeatLargeItem" data-item="سوبر سوبريم لحوم كبير" data-price="160">
+    <img src="img/supreme_meat.jpg" alt="سوبر سوبريم لحوم" />
+    <h3>سوبر سوبريم لحوم كبير<span class="primary-text"> -> 160 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('superSupremeMeatLarge')">-</button>
+        <input type="text" id="superSupremeMeatLarge" value="0" readonly />
+        <button onclick="increaseQuantity('superSupremeMeatLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="superSupremeMeatSmallItem" data-item="سوبر سوبريم لحوم صغير" data-price="145">
+    <img src="img/supreme_meat.jpg" alt="سوبر سوبريم لحوم" />
+    <h3>سوبر سوبريم لحوم صغير<span class="primary-text"> -> 145 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('superSupremeMeatSmall')">-</button>
+        <input type="text" id="superSupremeMeatSmall" value="0" readonly />
+        <button onclick="increaseQuantity('superSupremeMeatSmall')">+</button>
+    </div>
+</div>
+
+<!-- سوبر سوبريم فراخ -->
+<div class="menu-item" id="superSupremeChickenLargeItem" data-item="سوبر سوبريم فراخ كبير" data-price="165">
+    <img src="img/supreme_chicken.jpg" alt="سوبر سوبريم فراخ" />
+    <h3>سوبر سوبريم فراخ كبير<span class="primary-text"> -> 165 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('superSupremeChickenLarge')">-</button>
+        <input type="text" id="superSupremeChickenLarge" value="0" readonly />
+        <button onclick="increaseQuantity('superSupremeChickenLarge')">+</button>
+    </div>
+</div>
+<div class="menu-item" id="superSupremeChickenSmallItem" data-item="سوبر سوبريم فراخ صغير" data-price="150">
+    <img src="img/supreme_chicken.jpg" alt="سوبر سوبريم فراخ" />
+    <h3>سوبر سوبريم فراخ صغير<span class="primary-text"> -> 150 EGP :</span></h3>
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity('superSupremeChickenSmall')">-</button>
+        <input type="text" id="superSupremeChickenSmall" value="0" readonly />
+        <button onclick="increaseQuantity('superSupremeChickenSmall')">+</button>
+    </div>
+</div>
+
+        </div>
+    </div>
+    
+        <button class="final-order-button" onclick="finalizeOrder()">اطلب الآن</button>
+
+        <!-- Order options (Place or Delivery) -->
+        <div class="order-options">
+            <h3>اختار طريقة الطلب</h3>
+            <button onclick="showDineInForm()">مكان</button>
+            <button onclick="showDeliveryForm()">دليفري</button>
+        </div>
+
+        <!-- Dine In Form -->
+        <div class="dine-in-form">
+            <h3>من فضلك أدخل بياناتك</h3>
+            <input type="text" id="dineName" placeholder="الاسم" required/>
+            <input type="text" id="dinePhone" placeholder="رقم الهاتف" />
+            <input type="number" id="tableNumber" placeholder="رقم الطربيزة" min="1" max="13" min="1I" max="13I" required/>
+            <select id="floor" required>
+                <option value="">اختر الدور</option>
+                <option value="علوي">علوي</option>
+                <option value="سفلي">سفلي</option>
+            </select>
+            <br>
+            <button onclick="submitDineIn()">تأكيد</button>
+        </div>
+        <!-- Delivery Form -->
+        <div class="delivery-form">
+            <h3>من فضلك أدخل بياناتك</h3>
+            <input type="text" id="deliveryName" placeholder="الاسم" required />
+            <input type="text" id="deliveryPhone" placeholder="رقم الهاتف" required/>
+            <textarea id="deliveryAddress" placeholder="العنوان بالتفصيل" required></textarea>
+            <br>
+            <button onclick="submitDelivery()">تأكيد</button>
+        </div>
+
+        <!-- Confirmation -->
+        <div class="confirmation">
+            <h3>تفاصيل الطلب</h3>
+            <p id="orderSummary"></p>
+            <button onclick="confirmOrder()">تأكيد الطلب</button>
+        </div>
+    </div>
+    </div>
+    <script>
+        let orderData = {
+    // Drinks .
+    hotChocolate: 0,
+    whiteChocolate: 0,
+    hotOreo: 0,
+    hotMarshmallow: 0,
+    hotLotus: 0,
+    hotTwinkies: 0,
+    hotBaristaChocolate: 0,
+    hotCider: 0,
+    tea: 0,
+    greenTea: 0,
+    flavoredTea: 0,
+    herbalTea: 0,
+    turkishCoffee : 0,
+    frenchCoffee: 0,
+    hazelnutCoffee: 0,
+    caramelCoffee: 0,
+    nutellaCoffee: 0,
+    espressoCoffee: 0,
+    macchiatoCoffee: 0,
+    americanCoffee: 0,
+    nescafeFlavor: 0,
+    cappuccino: 0,
+    latteFlavor: 0,
+    pistachioLatte: 0,
+    hammerHead: 0,
+    strongHead: 0,
+    darkCaramelMoch: 0,
+    cinnamonRoll : 0,
+    donut : 0,
+    croissant : 0,
+    iceNescafe :0,
+    iceLatte :0 ,
+    iceCappuccino : 0,
+    iceMocha : 0,
+    chocolash : 0,
+    frietMocha : 0,
+    friet : 0,
+    iceCreamSauce : 0,
+    iceSunDairyBarista :0,
+    iceMadness :0,
+    peach :0,
+    blackberry : 0,
+    blueberry : 0,
+    kiwi : 0,
+    strawberry : 0,
+    strawberryh:0,
+    redBerry:0,
+    tropical :0,
+    lemon :0,
+    mintLemon : 0,
+    kiwim :0,
+    lemon: 0,
+    mintLemon: 0,
+    turkishMintLemon: 0,
+    orange: 0,
+    bananaMilk: 0,
+    dateMilk: 0,
+    strawberryMilk: 0,
+    mango: 0,
+    kiwi: 0,
+    watermelon: 0,
+    guavaMilk: 0,
+    guavaMint: 0,
+    mangoOrange: 0,
+    mangoKiwi: 0,
+    mangoPineapple: 0,
+    kiwiPineapple: 0,
+    kiwiOrange: 0,
+    specialBarbista: 0,
+    strawberry50: 0,
+    
+    vanillaMilkshake: 0,
+    chocolateMilkshake: 0,
+    caramelMilkshake: 0,
+    lotusMilkshake: 0,
+    oreoMilkshake: 0,
+    nutellaMilkshake: 0,
+    blueberryMilkshake: 0,
+    redberryMilkshake: 0,
+    berryMixMilkshake: 0,
+    greenAppleMilkshake: 0,
+    tropicalFruitsMilkshake: 0,
+    strawberryMilkshake: 0,
+    kiwiMilkshake: 0,
+    pineappleMilkshake: 0,
+    peachMilkshake: 0,
+    mangoMilkshake: 0,
+    crazyChocolateMilkshake: 0,
+    
+    pistachioMilkshake : 0,
+    baristaSpecialMilkshake : 0,
+    bananaBerry : 0,
+    bananaPistachio : 0,
+    chocolate : 0,
+    
+    mixSofty: 0,
+    blueSky: 0,
+    bluePassion: 0,
+    mojito: 0,
+    pepsi: 0,
+    sevenUp: 0,
+    fanta: 0,
+    schweppes: 0,
+    teaMixAjdal: 0,
+    ajdalFlavor: 0,
+    fruitCrazy: 0,
+    // food .
+    chocolateCake : 0, 
+    moltenCake : 0,
+    cheesecake : 0,
+    moltenBaristaCake : 0,
+    fruitSalad : 0,
+    fruitSaladBarista : 0,
+    omAli : 0,
+    cupcake : 0,
+    cupcakeBarista : 0,
+    oreoTagine : 0,
+    
+    nutellaWaffle: 0,
+    caramelWaffle: 0,
+    chocolateWaffle: 0,
+    oreoWaffle: 0,
+    lotusWaffle: 0,
+    pistachioWaffle: 0,
+    whiteChocolateWaffle: 0,
+    
+    cordonBlue: 0,
+    kofta: 0,
+    pane: 0,
+    stres: 0,
+    chickenGrill: 0,
+    shishTawook: 0,
+    mixGrill: 0,
+    
+    banaArabita: 0,
+    banaAlfredo: 0,
+    najerSko: 0,
+    banaShrimp: 0,
+    banaSausage: 0,
+    banaHotDog: 0,
+    spaghettiChicken: 0,
+    spaghettiBlueNiz: 0,
+    pastaBechamel: 0,
+    pastaRedSauce: 0,
+    
+    banya: 0,
+    estres: 0,
+    anger: 0,
+    shish: 0,
+    fajita: 0,
+    burger: 0,
+    kofta: 0,
+    sausage: 0,
+    sogok: 0,
+    potato: 0,
+    cheeseMix: 0,
+    chickenMix: 0,
+    meatMix: 0,
+    baristaMix: 0,
+    shrimp: 0,
+    
+    nutella : 0,
+    nutellaBanana : 0,
+    bananaApple : 0,
+    nuts : 0,
+    
+    beefBurger: 0,
+    eggBurger: 0,
+    cheeseBurger: 0,
+    cheeseBurgerbvc: 0,
+    doubleBeefBurger: 0,
+    stress: 0,
+    angers: 0,
+    banya: 0,
+    kofta: 0,
+    chickenFajita: 0,
+    sausageDish: 0,
+    sosis: 0,
+    potato: 0,
+    shrimpGrill: 0,
+    chickenBurger: 0,
+    flyChickenBurger: 0,
+    shish: 0,
+    
+    rocketSausage: 0,
+    rocketSosis: 0,
+    rocketShish: 0,
+    rocketFajita: 0,
+    rocketKofta: 0,
+    rocketShrimp: 0,
+    mixedSalad: 0,
+    caesarSalad: 0,
+    greekSalad: 0,
+    garlicDip: 0,
+    tahini: 0,
+    potatoPack: 0,
+    
+    margheritaLarge: 0,
+    margheritaSmall: 0,
+    vegetablesLarge: 0,
+    vegetablesSmall: 0,
+    fourCheeseLarge: 0,
+    fourCheeseSmall: 0,
+    stripsLarge: 0,
+    stripsSmall: 0,
+    barbecueLarge: 0,
+    barbecueSmall: 0,
+    ranchLarge: 0,
+    ranchSmall: 0,
+    sausageLarge: 0,
+    sausageSmall: 0,
+    groundBeefLarge: 0,
+    groundBeefSmall: 0,
+    sausageLarge: 0,
+    sausageSmall: 0,
+    meatMixLarge: 0,
+    meatMixSmall: 0,
+    chickenMixLarge: 0,
+    chickenMixSmall: 0,
+    tunaLarge: 0,
+    tunaSmall: 0,
+    shrimpLarge: 0,
+    shrimpSmall: 0,
+    superSupremeMeatLarge: 0,
+    superSupremeMeatSmall: 0,
+    superSupremeChickenLarge: 0,
+    superSupremeChickenSmall: 0,
+        };
+let itemPrices = {
+// Drinks .
+    hotChocolate: 50,
+    whiteChocolate: 50,
+    hotOreo: 60,
+    hotMarshmallow: 60,
+    hotLotus: 75,
+    hotTwinkies: 60,
+    hotBaristaChocolate: 80,
+    hotCider: 50,
+    tea: 20,
+    greenTea: 20,
+    flavoredTea: 25,
+    herbalTea: 20,
+    turkishCoffee: 40,
+    frenchCoffee: 50,
+    hazelnutCoffee: 55,
+    caramelCoffee: 50,
+    nutellaCoffee: 55,
+    espressoCoffee: 60,
+    macchiatoCoffee: 55,
+    americanCoffee: 55,
+    nescafeFlavor: 55,
+    cappuccino: 60,
+    latteFlavor: 60,
+    pistachioLatte: 70,
+    hammerHead: 65,
+    strongHead: 75,
+    darkCaramelMoch: 75,
+    cinnamonRoll : 60,
+    donut : 45,
+    croissant : 50,
+    iceNescafe :55,
+    iceLatte :60,
+    iceCappuccino : 60,
+    iceMocha : 70,
+    chocolash : 65,
+    frietMocha : 70,
+    friet : 65,
+    iceCreamSauce : 40,
+    iceSunDairyBarista :70,
+    iceMadness :75,
+    peach :65,
+    blackberry : 70,
+    blueberry : 70,
+    kiwi : 70,
+    strawberry : 60,
+    strawberryh:60,
+    redBerry:65,
+    tropical :60,
+    lemon :50,
+    mintLemon : 60,
+    kiwim :80,
+    lemon: 50,
+    mintLemon: 55,
+    turkishMintLemon: 60,
+    orange: 50,
+    bananaMilk: 55,
+    dateMilk: 55,
+    strawberryMilk: 55,
+    mango: 60,
+    kiwi: 80,
+    watermelon: 55,
+    guavaMilk: 55,
+    guavaMint: 55,
+    mangoOrange: 65,
+    mangoKiwi: 75,
+    mangoPineapple: 65,
+    kiwiPineapple: 65,
+    kiwiOrange: 75,
+    specialBarbista: 95,
+    strawberry50: 50,
+    
+    vanillaMilkshake: 55,
+    chocolateMilkshake: 60,
+    caramelMilkshake: 60,
+    lotusMilkshake: 80,
+    oreoMilkshake: 65,
+    nutellaMilkshake: 65,
+    blueberryMilkshake: 65,
+    redberryMilkshake: 60,
+    berryMixMilkshake: 70,
+    greenAppleMilkshake: 60,
+    tropicalFruitsMilkshake: 65,
+    strawberryMilkshake: 65,
+    kiwiMilkshake: 70,
+    pineappleMilkshake: 65,
+    peachMilkshake: 65,
+    mangoMilkshake: 60,
+    crazyChocolateMilkshake: 85,
+    
+    pistachioMilkshake : 85,
+    baristaSpecialMilkshake : 85,
+    bananaBerry : 80,
+    bananaPistachio : 90,
+    chocolate : 85,
+    
+    mixSofty: 70,
+    blueSky: 60,
+    bluePassion: 60,
+    mojito: 60,
+    pepsi: 25,
+    sevenUp: 25,
+    fanta: 25,
+    schweppes: 35,
+    teaMixAjdal: 60,
+    ajdalFlavor: 90,
+    fruitCrazy: 80,
+    // food
+    chocolateCake : 70, 
+    moltenCake : 75,
+    cheesecake : 75,
+    moltenBaristaCake : 80,
+    fruitSalad : 60,
+    fruitSaladBarista : 70,
+    omAli : 60,
+    cupcake : 60,
+    cupcakeBarista : 70,
+    oreoTagine : 70,
+    
+    nutellaWaffle: 70,
+    caramelWaffle: 70,
+    chocolateWaffle: 70,
+    oreoWaffle: 70,
+    lotusWaffle: 95,
+    pistachioWaffle: 95,
+    whiteChocolateWaffle: 70,
+    
+    cordonBlue: 190,
+    kofta: 200,
+    pane: 165,
+    stres: 170,
+    chickenGrill: 190,
+    shishTawook: 190,
+    mixGrill: 220,
+    
+    banaArabita: 50,
+    banaAlfredo: 75,
+    najerSko: 85,
+    banaShrimp: 110,
+    banaSausage: 80,
+    banaHotDog: 80,
+    spaghettiChicken: 80,
+    spaghettiBlueNiz: 80,
+    pastaBechamel: 85,
+    pastaRedSauce: 85,
+    
+    banya: 85,
+    estres: 90,
+    anger: 90,
+    shish: 95,
+    fajita: 100,
+    burger: 100,
+    kofta: 80,
+    sausage: 80,
+    sogok: 80,
+    potato: 50,
+    cheeseMix: 75,
+    chickenMix: 105,
+    meatMix: 110,
+    baristaMix: 115,
+    shrimp: 125,
+    
+    nutella : 50,
+    nutellaBanana : 55,
+    bananaApple : 60,
+    nuts : 60,
+    
+    beefBurger: 90,
+    eggBurger: 95,
+    cheeseBurger: 95,
+    cheeseBurgerbvc: 110,
+    doubleBeefBurger: 150,
+    stress: 80,
+    angers: 80,
+    banya: 85,
+    kofta: 85,
+    chickenFajita: 75,
+    sausageDish: 75,
+    sosis: 75,
+    potato: 40,
+    shrimpGrill: 100,
+    chickenBurger: 85,
+    flyChickenBurger: 100,
+    shish: 85,
+    
+    rocketSausage: 95,
+    rocketSosis: 95,
+    rocketShish: 100,
+    rocketFajita: 100,
+    rocketKofta: 110,
+    rocketShrimp: 125,
+    mixedSalad: 25,
+    caesarSalad: 50,
+    greekSalad: 40,
+    garlicDip: 10,
+    tahini: 10,
+    potatoPack: 30,
+    
+    margheritaLarge: 110,
+    margheritaSmall: 100,
+    vegetablesLarge: 115,
+    vegetablesSmall: 105,
+    fourCheeseLarge: 120,
+    fourCheeseSmall: 110,
+    stripsLarge: 135,
+    stripsSmall: 120,
+    barbecueLarge: 135,
+    barbecueSmall: 120,
+    ranchLarge: 145,
+    ranchSmall: 130,
+    sausageLarge: 120,
+    sausageSmall: 110,
+    groundBeefLarge: 150,
+    groundBeefSmall: 135,
+    sausageLarge: 120,
+    sausageSmall: 110,
+    meatMixLarge: 160,
+    meatMixSmall: 145,
+    chickenMixLarge: 150,
+    chickenMixSmall: 140,
+    tunaLarge: 140,
+    tunaSmall: 125,
+    shrimpLarge: 165,
+    shrimpSmall: 150,
+    superSupremeMeatLarge: 160,
+    superSupremeMeatSmall: 145,
+    superSupremeChickenLarge: 165,
+    superSupremeChickenSmall: 150,
+
+    };
+
+
+        function increaseQuantity(item) {
+            orderData[item]++;
+            document.getElementById(item).value = orderData[item];
+        }
+
+        function decreaseQuantity(item) {
+            if (orderData[item] > 0) {
+                orderData[item]--;
+                document.getElementById(item).value = orderData[item];
+            }
+        }
+
+        function finalizeOrder() {
+            let totalQuantity = 0;
+            for (let item in orderData) {
+                totalQuantity += orderData[item];
+            }
+
+            if (totalQuantity === 0) {
+                alert("يجب أن تطلب منتجًا واحدًا على الأقل");
+            } else {
+                document.querySelector(".order-options").style.display = "block";
+            }
+        }
+
+        function showDineInForm() {
+            document.querySelector(".order-options").style.display = "none";
+            document.querySelector(".dine-in-form").style.display = "block";
+        }
+
+        function showDeliveryForm() {
+            document.querySelector(".order-options").style.display = "none";
+            document.querySelector(".delivery-form").style.display = "block";
+        }
+
+        function submitDineIn() {
+            const name = document.getElementById("dineName").value;
+            const phone = document.getElementById("dinePhone").value;
+            const tableNumber = document.getElementById("tableNumber").value;
+            const floor = document.getElementById("floor").value;
+            let message = `تم اختيارك للطلب في مكان.\nالاسم: ${name}, رقم الهاتف: ${phone}, رقم الطربيزة: ${tableNumber}, الدور: ${floor}\n`;
+
+            let totalPrice = 0;
+            let itemsMessage = '';
+            for (let item in orderData) {
+                if (orderData[item] > 0) {
+                    let price = itemPrices[item];
+                    let itemTotal = orderData[item] * price;
+                    itemsMessage += `${document.querySelector(`#${item}Item h3`).innerText} - ${orderData[item]} × ${price} EGP = ${itemTotal} EGP\n`;
+                    totalPrice += itemTotal;
+                }
+            }
+            message += `\nتفاصيل الطلب:\n${itemsMessage}\nالمجموع الكلي: ${totalPrice} EGP`;
+            document.getElementById("orderSummary").innerText = message;
+            document.querySelector(".confirmation").style.display = "block";
+        }
+
+        function submitDelivery() {
+            const name = document.getElementById("deliveryName").value;
+            const phone = document.getElementById("deliveryPhone").value;
+            const address = document.getElementById("deliveryAddress").value;
+            let message = `تم اختيارك للطلب دليفري.\nالاسم: ${name}, رقم الهاتف: ${phone}, العنوان: ${address}\n`;
+            message += "يجب دفع 25% من المبلغ عبر فودافون كاش على الرقم 01006853813.";
+
+            
+            let totalPrice = 0;
+            let itemsMessage = '';
+            for (let item in orderData) {
+                if (orderData[item] > 0) {
+                    let price = itemPrices[item];
+                    let itemTotal = orderData[item] * price;
+                    itemsMessage += `${document.querySelector(`#${item}Item h3 `).innerText} - ${orderData[item]} × ${price} EGP = ${itemTotal} EGP\n`;
+                    totalPrice += itemTotal;
+                }
+            }
+            message += `\nتفاصيل الطلب:\n${itemsMessage}\nالمجموع الكلي: ${totalPrice} EGP`;
+            document.getElementById("orderSummary").innerText = message;
+            document.querySelector(".confirmation").style.display = "block";
+        }
+
+        function confirmOrder() {
+            alert("تم تأكيد الطلب بنجاح!");
+            location.reload();
+        }
+    </script>
+    
+</body>
+</html>
